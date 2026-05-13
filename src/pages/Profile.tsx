@@ -107,6 +107,8 @@ export default function Profile() {
         <div className="orb orb-d" />
         <div className="orb orb-e" />
         <div className="orb orb-f" />
+        <div className="profile-glow" />
+
         {/* 顶栏 */}
         <div className="profile-topbar pf-fade">
           <button className="profile-back" onClick={() => navigate("/")} title="返回首页">
