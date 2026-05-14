@@ -110,6 +110,7 @@
 
 .profile-main {
   max-width: 800px; margin: 0 auto; padding: 0 24px 80px;
+  position: relative; z-index: 2;
 }
 
 /* 入场 */
@@ -146,7 +147,7 @@
 /* 渐变色球 */
 .profile-root .orb {
   position: fixed; border-radius: 50%;
-  filter: blur(45px); pointer-events: none; z-index: 1;
+  filter: blur(45px); pointer-events: none; z-index: 0;
   will-change: transform;
 }
 .profile-root .orb-a { width: 500px; height: 500px; top: -10%; right: -12%; background: radial-gradient(circle, #6366f1 0%, transparent 70%); opacity: 0.45; animation: pa 18s ease-in-out infinite; }
@@ -220,6 +221,17 @@
 
 /* 区块 */
 .pf-section { margin-top: 36px; }
+
+/* 滚动渐显 */
+.pf-section-fade {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.pf-section-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 .pf-section-title {
   display: flex; align-items: center; gap: 10px;
   font-size: 17px; font-weight: 700; margin-bottom: 14px;
@@ -246,6 +258,22 @@
   height: 100%; border-radius: 4px;
   background: linear-gradient(90deg, var(--accent), var(--accent2));
   transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+}
+.pf-skill-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+  transform: translateX(-100%);
+}
+.pf-skill-fill.shimmer::after {
+  animation: skillShimmer 1.2s ease-in-out forwards;
+}
+@keyframes skillShimmer {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
 }
 .pf-skill-lvl { width: 38px; text-align: right; font-size: 12px; color: var(--text-muted); flex-shrink: 0; }
 
@@ -361,6 +389,41 @@
   color: var(--accent);
   box-shadow: 0 0 0 6px var(--accent-glow);
   transform: translateY(-3px);
+}
+
+/* 移动端性能优化 */
+@media (max-width: 768px) {
+  /* 减少悬浮球数量和大小 */
+  .profile-root .orb {
+    filter: blur(30px);
+    will-change: auto;
+    animation-duration: 30s !important;
+  }
+  .profile-root .orb-c,
+  .profile-root .orb-e,
+  .profile-root .orb-f { display: none; }
+  .dark .profile-root .orb-a { width: 400px; height: 400px; }
+  .dark .profile-root .orb-b { width: 320px; height: 320px; }
+  .dark .profile-root .orb-d { width: 280px; height: 280px; }
+
+  /* 关闭网格漂移动画 */
+  .profile-root::before { animation: none; }
+
+  /* 减弱呼吸光晕 */
+  .profile-glow { animation-duration: 5s; opacity: 0.5; }
+
+  /* 移除毛玻璃效果（移动端GPU开销大） */
+  .pf-card,
+  .pf-info,
+  .profile-back,
+  .profile-theme-btn,
+  .profile-to-top {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .dark .pf-card,
+  .dark .pf-info,
+  .dark .profile-to-top { background: rgba(255,255,255,0.06); }
 }
 
 @media (max-width: 600px) {

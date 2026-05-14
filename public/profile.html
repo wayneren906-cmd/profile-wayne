@@ -128,7 +128,7 @@
 
     .home-content {
       max-width: 520px; width: 100%; text-align: center;
-      position: relative; z-index: 1;
+      position: relative; z-index: 2;
     }
 
     /* 入场动画 */
@@ -156,7 +156,7 @@
     .av-ring:hover, .detail-av-ring:hover { animation-play-state: paused; }
 
     /* 渐变色球 */
-    .orb { position: absolute; border-radius: 50%; filter: blur(45px); pointer-events: none; z-index: 1; will-change: transform; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(45px); pointer-events: none; z-index: 0; will-change: transform; }
     .orb-a { width: 500px; height: 500px; top: -12%; right: -15%; background: radial-gradient(circle, #6366f1 0%, transparent 70%); opacity: 0.45; animation: ha 18s ease-in-out infinite; }
     .orb-b { width: 380px; height: 380px; bottom: 8%; left: -10%; background: radial-gradient(circle, #8b5cf6 0%, transparent 70%); opacity: 0.4; animation: hb 22s ease-in-out infinite; }
     .orb-c { width: 420px; height: 420px; top: 25%; left: 40%; background: radial-gradient(circle, #06b6d4 0%, transparent 70%); opacity: 0.35; animation: hc 15s ease-in-out infinite; }
@@ -233,6 +233,16 @@
       font-weight: 500; border: 1px solid transparent;
       transition: all 0.25s ease; cursor: default;
     }
+    .home-tag {
+      animation: tagPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    .home-tag:nth-child(1) { animation-delay: 0.55s; }
+    .home-tag:nth-child(2) { animation-delay: 0.61s; }
+    .home-tag:nth-child(3) { animation-delay: 0.67s; }
+    .home-tag:nth-child(4) { animation-delay: 0.73s; }
+    .home-tag:nth-child(5) { animation-delay: 0.79s; }
+    .home-tag:nth-child(6) { animation-delay: 0.85s; }
+    @keyframes tagPop { from{opacity:0;transform:scale(0)} to{opacity:1;transform:scale(1)} }
     .home-tag:hover { border-color: var(--accent); background: var(--accent); color: #fff; transform: translateY(-1px); }
 
     .home-socials { display: flex; justify-content: center; gap: 10px; margin-bottom: 28px; }
@@ -244,7 +254,12 @@
       color: var(--text-secondary);
       position: relative;
     }
-    .home-social:hover { background: var(--accent); color: #fff; border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 6px 16px rgba(91,95,227,0.3); }
+    .home-social {
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  background 0.3s ease, color 0.3s ease,
+                  border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .home-social:hover { background: var(--accent); color: #fff; border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 6px 16px rgba(91,95,227,0.3); }
     .home-social::after {
       content: attr(title);
       position: absolute; bottom: calc(100% + 8px); left: 50%;
@@ -276,6 +291,8 @@
     .home-cta:hover { transform: scale(1.03); box-shadow: 0 4px 20px rgba(91,95,227,0.4); }
     .home-cta:hover::after { transform: translateX(100%); }
     .home-cta svg { width: 16px; height: 16px; }
+    .home-cta .cta-arrow { display: inline-flex; animation: arrowSwing 1.8s ease-in-out infinite; }
+    @keyframes arrowSwing { 0%,100%{transform:translateX(0)} 50%{transform:translateX(4px)} }
 
     /* ========== 详细简介 ========== */
     .detail-root {
@@ -310,13 +327,17 @@
     }
     html.dark .detail-root::before { opacity: 0.18; }
     @keyframes dgridDrift { from { background-position: 0 0; } to { background-position: 44px 44px; } }
+    /* 滚动渐显 */
+    .pf-section-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .pf-section-visible { opacity: 1; transform: translateY(0); }
+
     .detail-topbar {
       display: flex; align-items: center; justify-content: space-between;
       max-width: 800px; margin: 0 auto;
       padding: 20px 24px;
     }
 
-    .detail-main { max-width: 800px; margin: 0 auto; padding: 0 24px 80px; }
+    .detail-main { max-width: 800px; margin: 0 auto; padding: 0 24px 80px; position: relative; z-index: 2; }
 
     .df {
       opacity: 0; transform: translateY(14px);
@@ -381,7 +402,10 @@
     .pf-skill:last-child { margin-bottom: 0; }
     .pf-skill-name { width: 110px; font-size: 13px; font-weight: 500; flex-shrink: 0; }
     .pf-skill-track { flex: 1; height: 7px; background: var(--skill-track); border-radius: 4px; overflow: hidden; }
-    .pf-skill-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+    .pf-skill-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent), var(--accent2)); position: relative; overflow: hidden; }
+    .pf-skill-fill::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%); transform: translateX(-100%); }
+    .pf-skill-fill.shimmer::after { animation: skillShimmer 1.2s ease-in-out forwards; }
+    @keyframes skillShimmer { from{transform:translateX(-100%)} to{transform:translateX(100%)} }
     .pf-skill-lvl { width: 38px; text-align: right; font-size: 12px; color: var(--text-muted); flex-shrink: 0; }
 
     .pf-learning { position: relative; padding: 16px 0 16px 28px; border-bottom: 1px solid var(--border); transition: border-color 0.3s; }
@@ -447,6 +471,31 @@
       transform: translateY(-3px);
     }
 
+    /* 移动端性能优化 */
+    @media (max-width: 768px) {
+      .orb {
+        filter: blur(30px);
+        will-change: auto;
+        animation-duration: 30s !important;
+      }
+      .orb-c, .orb-e, .orb-f { display: none; }
+      html.dark .orb-a { width: 400px !important; height: 400px !important; }
+      html.dark .orb-b { width: 320px !important; height: 320px !important; }
+      html.dark .orb-d { width: 280px !important; height: 280px !important; }
+      .home-root::before, .detail-root::before { animation: none; }
+      .home-glow, .detail-glow { animation-duration: 5s; opacity: 0.5; }
+      .glass-card, .home-stat, .home-social, .home-theme-btn,
+      .detail-card, .detail-info, .detail-back, .detail-to-top {
+        backdrop-filter: none; -webkit-backdrop-filter: none;
+      }
+      html.dark .glass-card,
+      html.dark .home-stat,
+      html.dark .home-social,
+      html.dark .detail-card,
+      html.dark .detail-info,
+      html.dark .detail-to-top { background: rgba(255,255,255,0.06); }
+    }
+
     @media (max-width: 600px) {
       .detail-grid { grid-template-columns: 1fr; }
       .home-stats { gap: 12px; }
@@ -478,14 +527,14 @@
           <div class="av-ring"></div>
           <div class="av-inner">
             <div id="av-card" class="av-pick" style="width:110px;height:110px;font-size:40px" onclick="document.getElementById('av-file').click()" title="点击更换头像">
-              <span id="av-card-text">任</span>
+              <img src="avatar.jpg" alt="头像" style="width:100%;height:100%;object-fit:cover" />
               <div class="av-overlay">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
               </div>
             </div>
           </div>
         </div>
-        <input type="file" id="av-file" accept="image/*" style="display:none" onchange="handleAvatar(this,'av-card','av-detail','av-card-text','av-detail-text','av-file','av-file2')" />
+        <input type="file" id="av-file" accept="image/*" style="display:none" onchange="handleAvatar(this,'av-card','av-detail','av-file','av-file2')" />
 
         <h1 class="home-name hf hf2">任韪岩</h1>
         <p class="home-role hf hf2">学生 · AI 驱动开发者</p>
@@ -536,7 +585,7 @@
 
         <button class="home-cta hf hf7" onclick="showDetail()">
           查看完整简介
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <svg class="cta-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </button>
       </div>
     </div>
@@ -570,14 +619,14 @@
             <div class="detail-av-ring"></div>
             <div class="detail-av-inner">
               <div id="av-detail" class="av-pick" style="width:120px;height:120px;font-size:44px" onclick="document.getElementById('av-file2').click()" title="点击更换头像">
-                <span id="av-detail-text">任</span>
+                <img src="avatar.jpg" alt="头像" style="width:100%;height:100%;object-fit:cover" />
                 <div class="av-overlay">
                   <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
                 </div>
               </div>
             </div>
           </div>
-          <input type="file" id="av-file2" accept="image/*" style="display:none" onchange="handleAvatar(this,'av-card','av-detail','av-card-text','av-detail-text','av-file','av-file2')" />
+          <input type="file" id="av-file2" accept="image/*" style="display:none" onchange="handleAvatar(this,'av-card','av-detail','av-file','av-file2')" />
 
           <h1 class="detail-name df df1">任韪岩</h1>
           <p class="detail-role df df1">学生 · AI 驱动开发者</p>
@@ -683,12 +732,38 @@
       skillsAnimated = true;
       var fills = document.querySelectorAll('#skills-cont .pf-skill-fill');
       var lvls = document.querySelectorAll('#skills-cont .pf-skill-lvl');
+      // 禁用 CSS transition，使用 JS 动画
+      fills.forEach(function(f) { f.style.transition = 'none'; });
       skills.forEach(function(s, i) {
+        var delay = i * 100;
+        var duration = 800;
         setTimeout(function() {
-          fills[i].style.width = s.level + '%';
-          lvls[i].textContent = s.level + '%';
-        }, i * 80);
+          var startTime = performance.now();
+          function tick(now) {
+            var progress = Math.min((now - startTime) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            fills[i].style.width = (s.level * eased) + '%';
+            if (progress < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+          // 计数动画
+          countUp(lvls[i], s.level, 900 + i * 120);
+        }, delay);
       });
+      // shimmer 在所有 fill 动画完成后触发
+      setTimeout(function() {
+        fills.forEach(function(f) { f.classList.add('shimmer'); });
+      }, 1500);
+    }
+
+    function countUp(el, target, duration) {
+      var startTime = performance.now();
+      function tick(now) {
+        var progress = Math.min((now - startTime) / duration, 1);
+        el.textContent = Math.round(target * progress) + '%';
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
     }
 
     function renderLearnings() {
@@ -737,7 +812,7 @@
     // ---- 头像上传 (简洁版，用 DOM 操作避免字符串转义) ----
     var AVATAR_KEY = 'profile_avatar';
 
-    function handleAvatar(input, cardId, detailId, cardTextId, detailTextId, fileId1, fileId2) {
+    function handleAvatar(input, cardId, detailId, fileId1, fileId2) {
       var file = input.files[0];
       if (!file) return;
       var reader = new FileReader();

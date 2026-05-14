@@ -119,7 +119,7 @@
   width: 100%;
   text-align: center;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* 头像区域 */
@@ -147,7 +147,7 @@
 /* 渐变色球 */
 .orb {
   position: absolute; border-radius: 50%;
-  filter: blur(45px); pointer-events: none; z-index: 1;
+  filter: blur(45px); pointer-events: none; z-index: 0;
   will-change: transform;
 }
 .orb-a { width: 500px; height: 500px; top: -12%; right: -15%; background: radial-gradient(circle, #6366f1 0%, transparent 70%); opacity: 0.45; animation: oa 18s ease-in-out infinite; }
@@ -262,6 +262,17 @@
   border: 1px solid transparent;
   transition: all 0.25s ease;
   cursor: default;
+  animation: tagPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.home-tag:nth-child(1) { animation-delay: 0.55s; }
+.home-tag:nth-child(2) { animation-delay: 0.61s; }
+.home-tag:nth-child(3) { animation-delay: 0.67s; }
+.home-tag:nth-child(4) { animation-delay: 0.73s; }
+.home-tag:nth-child(5) { animation-delay: 0.79s; }
+.home-tag:nth-child(6) { animation-delay: 0.85s; }
+@keyframes tagPop {
+  from { opacity: 0; transform: scale(0); }
+  to   { opacity: 1; transform: scale(1); }
 }
 .home-tag:hover {
   border-color: var(--accent);
@@ -284,7 +295,11 @@
   -webkit-backdrop-filter: blur(12px);
   color: var(--text-secondary);
   display: flex; align-items: center; justify-content: center;
-  transition: all 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background 0.3s ease,
+              color 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
   text-decoration: none;
   position: relative;
 }
@@ -292,7 +307,7 @@
   background: var(--accent);
   color: #fff;
   border-color: var(--accent);
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   box-shadow: 0 6px 16px rgba(91,95,227,0.3);
 }
 .home-social::after {
@@ -331,6 +346,14 @@
   position: relative;
   overflow: hidden;
 }
+.home-cta .cta-arrow {
+  display: inline-flex;
+  animation: arrowSwing 1.8s ease-in-out infinite;
+}
+@keyframes arrowSwing {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
 .home-cta::after {
   content: '';
   position: absolute; inset: 0;
@@ -344,6 +367,33 @@
 }
 .home-cta:hover::after {
   transform: translateX(100%);
+}
+
+/* 移动端性能优化 */
+@media (max-width: 768px) {
+  .orb {
+    filter: blur(30px);
+    will-change: auto;
+    animation-duration: 30s !important;
+  }
+  .orb-c, .orb-e, .orb-f { display: none; }
+  .dark .orb-a { width: 400px; height: 400px; }
+  .dark .orb-b { width: 320px; height: 320px; }
+  .dark .orb-d { width: 280px; height: 280px; }
+
+  /* 关闭网格漂移动画 */
+  .home-root::before { animation: none; }
+
+  /* 减弱呼吸光晕 */
+  .home-glow { animation-duration: 5s; opacity: 0.5; }
+
+  /* 移除毛玻璃效果 */
+  .home-stat, .home-social, .home-theme-btn {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .dark .home-stat,
+  .dark .home-social { background: rgba(255,255,255,0.06); }
 }
 
 /* 响应式 */

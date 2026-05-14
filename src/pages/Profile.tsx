@@ -52,15 +52,59 @@ const infoCards = [
   { icon: Heart, label: "核心理念", value: "人定架构 · AI 实现" },
 ];
 
+function useCountUp(target: number, start: boolean, duration = 500) {
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (!start) return;
+    let frame: number;
+    const startTime = performance.now();
+    const tick = () => {
+      const elapsed = performance.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      setValue(Math.round(target * progress));
+      if (progress < 1) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [start, target, duration]);
+
+  return value;
+}
+
+function useScrollReveal(threshold = 0.2) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRevealed(true);
+          obs.disconnect();
+        }
+      },
+      { threshold, rootMargin: "0px 0px -40px 0px" }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+
+  return { ref, revealed };
+}
+
 export default function Profile() {
   const navigate = useNavigate();
   const { toggleTheme, isDark } = useTheme();
   const [visible, setVisible] = useState(false);
-  const [skillsVisible, setSkillsVisible] = useState(false);
   const [showToTop, setShowToTop] = useState(false);
   const [iconSpin, setIconSpin] = useState(false);
   const iconMounted = useRef(false);
-  const skillsRef = useRef<HTMLDivElement>(null);
+  const [skillsVisible, setSkillsVisible] = useState(false);
+  const [shimmerTriggered, setShimmerTriggered] = useState(false);
+  const skillsReveal = useScrollReveal(0.25);
 
   useEffect(() => {
     document.title = "任韪岩 | 详细资料";
@@ -81,15 +125,12 @@ export default function Profile() {
   }, [isDark]);
 
   useEffect(() => {
-    const el = skillsRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setSkillsVisible(true); obs.disconnect(); } },
-      { threshold: 0.3 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
+    if (skillsReveal.revealed) {
+      setSkillsVisible(true);
+      const timer = setTimeout(() => setShimmerTriggered(true), 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [skillsReveal.revealed]);
 
   useEffect(() => {
     const onScroll = () => setShowToTop(window.scrollY > 400);
@@ -122,7 +163,7 @@ export default function Profile() {
         </div>
 
         <div className="profile-main">
-          {/* Hero */}
+          {/* Hero — 即时入场 */}
           <div className="pf-hero">
             <div className="pf-fade pf-avatar-wrap">
               <div className="pf-avatar-ring" />
@@ -143,87 +184,94 @@ export default function Profile() {
             </p>
           </div>
 
-          {/* 信息卡片 */}
-          <div className="pf-grid pf-fade pf-d3">
-            {infoCards.map((item) => (
-              <div className="pf-info" key={item.label}>
-                <div className="pf-info-icon"><item.icon size={17} /></div>
-                <div>
-                  <div className="pf-info-label">{item.label}</div>
-                  <div className="pf-info-value">{item.value}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* 技能 */}
-          <div className="pf-section pf-fade pf-d4" ref={skillsRef}>
-            <h2 className="pf-section-title"><Code2 /> 技术能力</h2>
-            <div className="pf-card">
-              {skills.map((s, i) => (
-                <div className="pf-skill" key={s.name}>
-                  <span className="pf-skill-name">{s.name}</span>
-                  <div className="pf-skill-track">
-                    <div
-                      className="pf-skill-fill"
-                      style={{
-                        width: skillsVisible ? `${s.level}%` : "0%",
-                        transitionDelay: skillsVisible ? `${i * 0.1}s` : "0s",
-                      }}
-                    />
+          {/* 信息卡片 — 滚动渐显 */}
+          <SectionFade>
+            <div className="pf-grid">
+              {infoCards.map((item, i) => (
+                <div className="pf-info" key={item.label} style={{ transitionDelay: `${i * 0.06}s` }}>
+                  <div className="pf-info-icon"><item.icon size={17} /></div>
+                  <div>
+                    <div className="pf-info-label">{item.label}</div>
+                    <div className="pf-info-value">{item.value}</div>
                   </div>
-                  <span className="pf-skill-lvl">{skillsVisible ? `${s.level}%` : "--"}</span>
                 </div>
               ))}
             </div>
+          </SectionFade>
+
+          {/* 技能 — 滚动渐显 + 计数 + shimmer */}
+          <div ref={skillsReveal.ref}>
+            <SectionFade manualReveal={skillsReveal.revealed}>
+              <div className="pf-section">
+                <h2 className="pf-section-title"><Code2 /> 技术能力</h2>
+                <div className="pf-card">
+                  {skills.map((s, i) => (
+                    <SkillBar
+                      key={s.name}
+                      name={s.name}
+                      level={s.level}
+                      index={i}
+                      visible={skillsVisible}
+                      shimmer={shimmerTriggered}
+                    />
+                  ))}
+                </div>
+              </div>
+            </SectionFade>
           </div>
 
           {/* 学习经验 */}
-          <div className="pf-section pf-fade pf-d5">
-            <h2 className="pf-section-title"><BookOpen /> 学习经验</h2>
-            <div className="pf-card">
-              {learnings.map((l) => (
-                <div className="pf-learning" key={l.name}>
-                  <div className="pf-learning-head">
-                    <span className="pf-learning-name">{l.name}</span>
-                    <span className="pf-learning-badge">{l.role}</span>
+          <SectionFade delay={0.1}>
+            <div className="pf-section">
+              <h2 className="pf-section-title"><BookOpen /> 学习经验</h2>
+              <div className="pf-card">
+                {learnings.map((l) => (
+                  <div className="pf-learning" key={l.name}>
+                    <div className="pf-learning-head">
+                      <span className="pf-learning-name">{l.name}</span>
+                      <span className="pf-learning-badge">{l.role}</span>
+                    </div>
+                    <p className="pf-learning-desc">{l.desc}</p>
                   </div>
-                  <p className="pf-learning-desc">{l.desc}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          </SectionFade>
 
           {/* 教育 */}
-          <div className="pf-section pf-fade pf-d5">
-            <h2 className="pf-section-title"><GraduationCap /> 教育背景</h2>
-            <div className="pf-card pf-edu">
-              <div className="pf-info-icon"><GraduationCap size={17} /></div>
-              <div>
-                <div style={{ fontSize: "15px", fontWeight: 600 }}>重庆邮电大学 · 物联网工程</div>
-                <div style={{ fontSize: "13px", color: "var(--text-muted)", marginTop: "3px" }}>
-                  大二在读
+          <SectionFade delay={0.15}>
+            <div className="pf-section">
+              <h2 className="pf-section-title"><GraduationCap /> 教育背景</h2>
+              <div className="pf-card pf-edu">
+                <div className="pf-info-icon"><GraduationCap size={17} /></div>
+                <div>
+                  <div style={{ fontSize: "15px", fontWeight: 600 }}>重庆邮电大学 · 物联网工程</div>
+                  <div style={{ fontSize: "13px", color: "var(--text-muted)", marginTop: "3px" }}>
+                    大二在读
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </SectionFade>
 
           {/* 社交 */}
-          <div className="pf-section pf-fade pf-d6">
-            <h2 className="pf-section-title"><Link2 /> 社交与联系</h2>
-            <div className="pf-card pf-socials">
-              {socials.map((s) => (
-                <a className="pf-social-item" href={s.href} target={s.external ? "_blank" : undefined} rel={s.external ? "noopener noreferrer" : undefined} key={s.label}>
-                  <div className="pf-social-icon"><s.icon size={18} /></div>
-                  <div>
-                    <div className="pf-social-label">{s.label}</div>
-                    <div className="pf-social-value">{s.value}</div>
-                  </div>
-                  {s.external && <ExternalLink size={14} className="pf-social-arrow" />}
-                </a>
-              ))}
+          <SectionFade delay={0.2}>
+            <div className="pf-section">
+              <h2 className="pf-section-title"><Link2 /> 社交与联系</h2>
+              <div className="pf-card pf-socials">
+                {socials.map((s) => (
+                  <a className="pf-social-item" href={s.href} target={s.external ? "_blank" : undefined} rel={s.external ? "noopener noreferrer" : undefined} key={s.label}>
+                    <div className="pf-social-icon"><s.icon size={18} /></div>
+                    <div>
+                      <div className="pf-social-label">{s.label}</div>
+                      <div className="pf-social-value">{s.value}</div>
+                    </div>
+                    {s.external && <ExternalLink size={14} className="pf-social-arrow" />}
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
+          </SectionFade>
         </div>
 
         {/* 回到顶部 */}
@@ -235,5 +283,65 @@ export default function Profile() {
           <ArrowUp size={18} />
         </button>
       </div>
+  );
+}
+
+function SkillBar({ name, level, index, visible, shimmer }: {
+  name: string; level: number; index: number; visible: boolean; shimmer: boolean;
+}) {
+  const [fillWidth, setFillWidth] = useState(0);
+  const countUp = useCountUp(level, visible, 900 + index * 120);
+
+  useEffect(() => {
+    if (!visible) return;
+    const delay = index * 100;
+    const duration = 800;
+    let frame: number;
+    const timeout = setTimeout(() => {
+      const startTime = performance.now();
+      const tick = () => {
+        const elapsed = performance.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setFillWidth(level * eased);
+        if (progress < 1) frame = requestAnimationFrame(tick);
+      };
+      frame = requestAnimationFrame(tick);
+    }, delay);
+    return () => {
+      clearTimeout(timeout);
+      cancelAnimationFrame(frame!);
+    };
+  }, [visible, level, index]);
+
+  return (
+    <div className="pf-skill">
+      <span className="pf-skill-name">{name}</span>
+      <div className="pf-skill-track">
+        <div
+          className={cn("pf-skill-fill", shimmer && "shimmer")}
+          style={{
+            width: `${fillWidth}%`,
+            transition: "none",
+            animationDelay: shimmer ? `${index * 0.15}s` : "0s",
+          }}
+        />
+      </div>
+      <span className="pf-skill-lvl">{visible ? `${countUp}%` : "--"}</span>
+    </div>
+  );
+}
+
+function SectionFade({ children, delay = 0, manualReveal }: {
+  children: React.ReactNode; delay?: number; manualReveal?: boolean;
+}) {
+  const autoReveal = useScrollReveal(0.2);
+  const revealed = manualReveal !== undefined ? manualReveal : autoReveal.revealed;
+  const ref = manualReveal !== undefined ? { current: null } : autoReveal.ref;
+
+  return (
+    <div ref={ref} className={cn("pf-section-fade", revealed && "pf-section-visible")} style={{ transitionDelay: `${delay}s` }}>
+      {children}
+    </div>
   );
 }

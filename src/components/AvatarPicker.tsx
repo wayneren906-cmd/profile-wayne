@@ -8,6 +8,7 @@ interface AvatarPickerProps {
 }
 
 const STORAGE_KEY = "profile_avatar";
+const DEFAULT_AVATAR = "/avatar.jpg";
 
 function getSavedAvatar(): string | null {
   try {
@@ -112,11 +113,7 @@ export default function AvatarPicker({ size, fallback, className = "" }: AvatarP
         style={{ display: "none" }}
         onChange={handleFile}
       />
-      {avatar ? (
-        <img src={avatar} alt="头像" />
-      ) : (
-        <span className="avatar-fallback">{fallback}</span>
-      )}
+      <img src={avatar || DEFAULT_AVATAR} alt="头像" />
       <div className="avatar-overlay">
         <Camera size={size * 0.22} />
       </div>

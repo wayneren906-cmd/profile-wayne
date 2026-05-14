@@ -132,7 +132,7 @@ export default function Home() {
           <div className="home-fade home-delay-7">
             <button className="home-cta" onClick={() => navigate("/profile")}>
               查看完整简介
-              <ArrowRight size={16} />
+              <ArrowRight size={16} className="cta-arrow" />
             </button>
           </div>
         </div>
