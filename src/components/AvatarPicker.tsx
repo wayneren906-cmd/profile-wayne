@@ -8,7 +8,7 @@ interface AvatarPickerProps {
 }
 
 const STORAGE_KEY = "profile_avatar";
-const DEFAULT_AVATAR = "/avatar.jpg";
+const DEFAULT_AVATAR = "/avatar.webp";
 
 function getSavedAvatar(): string | null {
   try {
@@ -87,6 +87,7 @@ export default function AvatarPicker({ size, fallback, className = "" }: AvatarP
           width: 100%;
           height: 100%;
           object-fit: cover;
+          aspect-ratio: 1;
         }
         .avatar-picker .avatar-fallback {
           font-size: ${size * 0.36}px;
@@ -113,7 +114,10 @@ export default function AvatarPicker({ size, fallback, className = "" }: AvatarP
         style={{ display: "none" }}
         onChange={handleFile}
       />
-      <img src={avatar || DEFAULT_AVATAR} alt="头像" />
+      <img src={avatar || DEFAULT_AVATAR} alt="头像" fetchPriority="high" onError={(e) => {
+        const t = e.currentTarget;
+        if (t.src.endsWith('.webp')) t.src = '/avatar-sm.jpg';
+      }} />
       <div className="avatar-overlay">
         <Camera size={size * 0.22} />
       </div>

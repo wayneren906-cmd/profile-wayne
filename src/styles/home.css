@@ -32,6 +32,100 @@
   --shadow-btn: 0 2px 12px rgba(124,127,245,0.3);
 }
 
+.nebula .home-root {
+  --bg: #0a0a1a;
+  --bg-card: rgba(255,255,255,0.15);
+  --text: #ece8ff;
+  --text-secondary: #c8c0e8;
+  --text-muted: #9d95be;
+  --border: rgba(255,255,255,0.08);
+  --accent: #a78bfa;
+  --accent2: #c084fc;
+  --accent-glow: rgba(167,139,250,0.18);
+  --tag-bg: rgba(167,139,250,0.12);
+  --tag-text: #c4b5fd;
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.3), 0 12px 40px rgba(0,0,0,0.4);
+  --shadow-btn: 0 2px 12px rgba(167,139,250,0.35);
+}
+.nebula-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(ellipse 500px at center, rgba(0,0,0,0.35) 0%, transparent 65%);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+.nebula .home-root .home-name {
+  background-image: linear-gradient(90deg, #fff 0%, #a78bfa 30%, #e879f9 50%, #a78bfa 70%, #fff 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  animation-duration: 12s;
+}
+.nebula .home-root .home-bio,
+.nebula .home-root .home-role {
+  text-shadow: 0 1px 8px rgba(0,0,0,0.5), 0 0 20px rgba(0,0,0,0.25);
+}
+
+.liuguang .home-root {
+  --bg: #0a0a1a;
+  --bg-card: rgba(255,255,255,0.08);
+  --text: #e8e4f0;
+  --text-secondary: #c0bcd8;
+  --text-muted: #9894b0;
+  --border: rgba(255,255,255,0.06);
+  --accent: #818cf8;
+  --accent2: #a78bfa;
+  --accent-glow: rgba(129,140,248,0.15);
+  --tag-bg: rgba(129,140,248,0.1);
+  --tag-text: #a5b4fc;
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.3), 0 12px 40px rgba(0,0,0,0.4);
+  --shadow-btn: 0 2px 12px rgba(129,140,248,0.3);
+}
+.liuguang .home-root .home-name {
+  background-image: linear-gradient(90deg, #e0e7ff 0%, #818cf8 30%, #a78bfa 50%, #818cf8 70%, #e0e7ff 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 12px rgba(129,140,248,0.3);
+}
+.liuguang .home-root .home-bio,
+.liuguang .home-root .home-role {
+  text-shadow: 0 1px 8px rgba(0,0,0,0.5), 0 0 20px rgba(0,0,0,0.25);
+}
+
+.liuxian .home-root {
+  --bg: #0c0c0e;
+  --bg-card: rgba(255,255,255,0.04);
+  --text: #e8e8ec;
+  --text-secondary: #a0a0b0;
+  --text-muted: #707080;
+  --border: rgba(255,255,255,0.05);
+  --accent: #9494a8;
+  --accent2: #a8a8c0;
+  --accent-glow: rgba(148,148,168,0.1);
+  --tag-bg: rgba(148,148,168,0.08);
+  --tag-text: #b0b0c4;
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.3), 0 12px 40px rgba(0,0,0,0.4);
+  --shadow-btn: 0 2px 12px rgba(148,148,168,0.2);
+}
+.liuxian .home-root .home-name {
+  background-image: linear-gradient(90deg, #e8e8ec 0%, #9494a8 30%, #b0b0c4 50%, #9494a8 70%, #e8e8ec 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+.liuxian .home-root .home-bio,
+.liuxian .home-root .home-role {
+  text-shadow: 0 1px 8px rgba(0,0,0,0.5), 0 0 20px rgba(0,0,0,0.25);
+}
+
 .home-root {
   min-height: 100vh;
   display: flex;
@@ -127,10 +221,11 @@
   display: inline-block;
   position: relative;
   margin-bottom: 28px;
+  perspective: 300px;
 }
 .home-avatar-ring {
   position: absolute;
-  inset: -8px;
+  inset: -7px;
   border-radius: 50%;
   background: conic-gradient(from 0deg, var(--accent), var(--accent2), transparent, transparent, var(--accent));
   animation: avatarSpin 4s linear infinite;
@@ -150,12 +245,12 @@
   filter: blur(45px); pointer-events: none; z-index: 0;
   will-change: transform;
 }
-.orb-a { width: 500px; height: 500px; top: -12%; right: -15%; background: radial-gradient(circle, #6366f1 0%, transparent 70%); opacity: 0.45; animation: oa 18s ease-in-out infinite; }
-.orb-b { width: 380px; height: 380px; bottom: 8%; left: -10%; background: radial-gradient(circle, #8b5cf6 0%, transparent 70%); opacity: 0.4; animation: ob 22s ease-in-out infinite; }
-.orb-c { width: 420px; height: 420px; top: 25%; left: 40%; background: radial-gradient(circle, #06b6d4 0%, transparent 70%); opacity: 0.35; animation: oc 15s ease-in-out infinite; }
-.orb-d { width: 340px; height: 340px; bottom: -10%; right: 20%; background: radial-gradient(circle, #f59e0b 0%, transparent 70%); opacity: 0.38; animation: od 20s ease-in-out infinite; }
-.orb-e { width: 300px; height: 300px; top: -8%; left: 5%; background: radial-gradient(circle, #ec4899 0%, transparent 70%); opacity: 0.32; animation: oe 16s ease-in-out infinite; }
-.orb-f { width: 360px; height: 360px; bottom: 30%; right: -8%; background: radial-gradient(circle, #a78bfa 0%, transparent 70%); opacity: 0.38; animation: of 24s ease-in-out infinite; }
+.orb-a { width: 650px; height: 650px; top: -12%; right: -15%; background: radial-gradient(circle, #6366f1 0%, transparent 70%); opacity: 0.45; animation: oa 18s ease-in-out infinite; }
+.orb-b { width: 500px; height: 500px; bottom: 8%; left: -10%; background: radial-gradient(circle, #8b5cf6 0%, transparent 70%); opacity: 0.4; animation: ob 22s ease-in-out infinite; }
+.orb-c { width: 550px; height: 550px; top: 25%; left: 40%; background: radial-gradient(circle, #06b6d4 0%, transparent 70%); opacity: 0.35; animation: oc 15s ease-in-out infinite; }
+.orb-d { width: 450px; height: 450px; bottom: -10%; right: 20%; background: radial-gradient(circle, #f59e0b 0%, transparent 70%); opacity: 0.38; animation: od 20s ease-in-out infinite; }
+.orb-e { width: 400px; height: 400px; top: -8%; left: 5%; background: radial-gradient(circle, #ec4899 0%, transparent 70%); opacity: 0.32; animation: oe 16s ease-in-out infinite; }
+.orb-f { width: 480px; height: 480px; bottom: 30%; right: -8%; background: radial-gradient(circle, #a78bfa 0%, transparent 70%); opacity: 0.38; animation: of 24s ease-in-out infinite; }
 
 .dark .orb-a { width: 700px; height: 700px; background: radial-gradient(circle, #818cf8 0%, transparent 35%); opacity: 0.45; }
 .dark .orb-b { width: 550px; height: 550px; background: radial-gradient(circle, #a78bfa 0%, transparent 35%); opacity: 0.4; }
@@ -175,6 +270,9 @@
   z-index: 1;
   border-radius: 50%;
   box-shadow: 0 0 0 4px var(--bg), 0 8px 30px rgba(0,0,0,0.08);
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 0.15s ease-out;
+  will-change: transform;
 }
 
 /* 入场动画 */
@@ -199,6 +297,16 @@
   letter-spacing: -1px;
   margin: 0 0 6px;
   line-height: 1.2;
+  background: linear-gradient(90deg, var(--text) 0%, var(--accent) 30%, var(--accent2) 50%, var(--accent) 70%, var(--text) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: nameShimmer 4s ease-in-out infinite;
+}
+@keyframes nameShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 .home-role {
   font-size: 15px;
@@ -270,6 +378,9 @@
 .home-tag:nth-child(4) { animation-delay: 0.73s; }
 .home-tag:nth-child(5) { animation-delay: 0.79s; }
 .home-tag:nth-child(6) { animation-delay: 0.85s; }
+.home-tag:nth-child(7) { animation-delay: 0.91s; }
+.home-tag:nth-child(8) { animation-delay: 0.97s; }
+.home-tag:nth-child(9) { animation-delay: 1.03s; }
 @keyframes tagPop {
   from { opacity: 0; transform: scale(0); }
   to   { opacity: 1; transform: scale(1); }
@@ -369,6 +480,16 @@
   transform: translateX(100%);
 }
 
+/* 星云 / 流光模式隐藏 orbs 和 glow */
+.nebula .orb,
+.nebula .home-glow,
+.nebula .home-root::before,
+.liuguang .orb,
+.liuguang .home-glow,
+.liuguang .home-root::before,
+.liuxian .orb,
+.liuxian .home-glow,
+.liuxian .home-root::before { display: none; }
 /* 移动端性能优化 */
 @media (max-width: 768px) {
   .orb {
@@ -380,6 +501,9 @@
   .dark .orb-a { width: 400px; height: 400px; }
   .dark .orb-b { width: 320px; height: 320px; }
   .dark .orb-d { width: 280px; height: 280px; }
+  .light .orb-a { width: 500px; height: 500px; }
+  .light .orb-b { width: 380px; height: 380px; }
+  .light .orb-d { width: 340px; height: 340px; }
 
   /* 关闭网格漂移动画 */
   .home-root::before { animation: none; }
