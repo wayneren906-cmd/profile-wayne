@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>任韪岩 · 简历</title>
+<style>
+  @page { size: A4; margin: 0; }
+
+  :root {
+    --text: #0a0a0c;
+    --text-2: #44464d;
+    --text-3: #8b8d96;
+    --line: #e8e8eb;
+    --accent: #0071e3;
+    --accent-2: #5856d6;
+    --indigo: #6366f1;
+    --fuchsia: #d946ef;
+    --cyan: #06b6d4;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 14mm 16mm 12mm;
+    background: #fff;
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Inter", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    font-size: 9.2pt;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 8mm;
+    padding-bottom: 4mm;
+    margin-bottom: 4.5mm;
+    border-bottom: 0.6px solid var(--line);
+  }
+  .header-l { flex: 1; min-width: 0; }
+  .name {
+    font-size: 32pt;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    margin: 0 0 1.5mm 0;
+    line-height: 1;
+    background: linear-gradient(95deg, var(--text) 0%, var(--accent) 70%, var(--accent-2) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .role {
+    font-size: 10.5pt;
+    font-weight: 500;
+    color: var(--text-2);
+    margin: 0;
+    letter-spacing: 0.005em;
+  }
+  .role b { color: var(--accent); font-weight: 600; }
+  .header-r {
+    text-align: right;
+    font-size: 8.4pt;
+    color: var(--text-2);
+    line-height: 1.7;
+    flex-shrink: 0;
+  }
+  .header-r a { color: inherit; text-decoration: none; }
+
+  .tagline {
+    position: relative;
+    font-size: 9.6pt;
+    color: var(--text);
+    font-weight: 500;
+    margin: 0 0 6mm 0;
+    padding-left: 4mm;
+    line-height: 1.6;
+    letter-spacing: -0.005em;
+    border-left: 2px solid var(--accent);
+  }
+  .tagline em {
+    font-style: normal;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .section { margin-bottom: 5mm; }
+  .section:last-child { margin-bottom: 0; }
+  .section-title {
+    position: relative;
+    font-size: 7.6pt;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin: 0 0 3.2mm 0;
+    padding-bottom: 1.6mm;
+    border-bottom: 0.5px solid var(--line);
+  }
+  .section-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.5px;
+    width: 14mm;
+    height: 1.2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  }
+
+  .project {
+    position: relative;
+    padding-left: 4mm;
+    margin-bottom: 4mm;
+    border-left: 2px solid var(--line);
+  }
+  .project:last-child { margin-bottom: 0; }
+  .project::before {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: 0;
+    width: 2px;
+    height: 8mm;
+    background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  }
+  .project-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 3mm;
+    margin-bottom: 0.8mm;
+  }
+  .project-name {
+    font-size: 11.5pt;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.015em;
+  }
+  .project-role {
+    font-size: 8pt;
+    color: var(--accent);
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .project-tech {
+    font-size: 8.2pt;
+    color: var(--text-3);
+    margin-bottom: 1.5mm;
+    letter-spacing: 0.005em;
+    padding-bottom: 1.2mm;
+    border-bottom: 0.4px dashed var(--line);
+  }
+  .project-desc {
+    font-size: 9pt;
+    color: var(--text-2);
+    margin: 0 0 1.4mm 0;
+  }
+  .project-points {
+    margin: 0;
+    padding-left: 4mm;
+    font-size: 8.8pt;
+    color: var(--text-2);
+    line-height: 1.55;
+  }
+  .project-points li { margin-bottom: 0.5mm; }
+  .project-points li::marker { color: var(--accent); }
+
+  .grid-row {
+    display: grid;
+    grid-template-columns: 16mm 1fr;
+    gap: 2mm 5mm;
+    align-items: baseline;
+    position: relative;
+  }
+  .grid-row::before {
+    content: '';
+    position: absolute;
+    left: 17.5mm;
+    top: 0;
+    bottom: 0;
+    width: 0.5px;
+    background: var(--line);
+  }
+  .grid-label {
+    font-size: 8.5pt;
+    font-weight: 600;
+    color: var(--text);
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5mm;
+  }
+  .grid-label::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--g, var(--accent));
+  }
+  .grid-value {
+    font-size: 8.8pt;
+    color: var(--text-2);
+  }
+  .grid-value b { color: var(--text); font-weight: 600; }
+  .g-indigo { --g: var(--indigo); }
+  .g-fuchsia { --g: var(--fuchsia); }
+  .g-cyan { --g: var(--cyan); }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 7mm;
+    padding-top: 2.5mm;
+    border-top: 0.5px solid var(--line);
+    font-size: 7.6pt;
+    color: var(--text-3);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+  .footer-l {
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-l">
+    <h1 class="name">任韪岩</h1>
+    <p class="role">前端开发 — <b>AI 工具实践者</b></p>
+  </div>
+  <div class="header-r">
+    <div><a href="mailto:Wayne.ren906@gmail.com">Wayne.ren906@gmail.com</a></div>
+    <div>+86 150 9595 0906</div>
+    <div><a href="https://github.com/wayneren906-cmd">github.com/wayneren906-cmd</a></div>
+    <div>中国 · 重庆</div>
+  </div>
+</header>
+
+<p class="tagline">
+  人类提供架构思维，AI 负责繁琐的底层实现 — 致力于将 AI 深度融入工作流，通过 <em>AI Agent</em> 驱动高效开发。
+</p>
+
+<section class="section">
+  <h3 class="section-title">Projects</h3>
+
+  <div class="project">
+    <div class="project-head">
+      <span class="project-name">个人简介网站</span>
+      <span class="project-role">持续迭代 · 独立开发</span>
+    </div>
+    <div class="project-tech">React 18 · TypeScript · Vite 6 · Tailwind CSS · Framer Motion · Cloudflare Pages</div>
+    <p class="project-desc">通过 Claude Code 在 Trae 终端中以自然语言驱动开发的个人主页，已扩展至 5 套主题，每套拥有独立的背景动画与交互系统。</p>
+    <ul class="project-points">
+      <li>基于 React Context + CSS 变量构建主题引擎，新增主题仅需定义颜色与背景组件，对现有逻辑零侵入</li>
+      <li>结合 IntersectionObserver 与 CSS transition 编排级联滚动入场，方向、曲线、stagger 按内容性格分组</li>
+      <li>移动端 GPU 友好降级策略：blur 浓度、orb 数量、永久循环动画按视口分级关闭，保证低端设备 60fps</li>
+    </ul>
+  </div>
+
+  <div class="project">
+    <div class="project-head">
+      <span class="project-name">GameHub 游戏探索平台</span>
+      <span class="project-role">独立开发</span>
+    </div>
+    <div class="project-tech">Next.js 15 · React 19 · TypeScript · Cloudflare Workers · RAWG API · WASM</div>
+    <p class="project-desc">基于 Next.js 的游戏发现与信息聚合平台，集成 AI 评测分析、硬件兼容性检测、Workers 缓存加速。</p>
+    <ul class="project-points">
+      <li>Cloudflare Workers + KV 实现 1h TTL 缓存代理，降低回源请求并大幅提升国内访问速度</li>
+      <li>分层 AI 评测策略：LLM 离线批处理生成要点标签 + Workers AI 在线推理处理实时请求</li>
+      <li>WASM 模块在浏览器端解析硬件配置文件，实现零后端依赖的兼容性检测与最低配置推断</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <h3 class="section-title">Skills</h3>
+  <div class="grid-row">
+    <span class="grid-label g-indigo">前端</span>
+    <span class="grid-value">React · TypeScript · JavaScript · HTML · CSS · Vite · Tailwind CSS · 移动端适配</span>
+    <span class="grid-label g-fuchsia">AI 工具</span>
+    <span class="grid-value">Claude Code · AI Agent 编排 · LLM API 集成 · Prompt Engineering</span>
+    <span class="grid-label g-cyan">工程</span>
+    <span class="grid-value">Git · npm · Cloudflare Pages / Workers · Vercel</span>
+  </div>
+</section>
+
+<section class="section">
+  <h3 class="section-title">Education &amp; Intent</h3>
+  <div class="grid-row">
+    <span class="grid-label">教育</span>
+    <span class="grid-value"><b>重庆邮电大学</b> · 物联网工程 · 大二在读</span>
+    <span class="grid-label">求职</span>
+    <span class="grid-value"><b>前端开发</b> · 重庆 / 一线城市 · AI 驱动网页开发</span>
+    <span class="grid-label">学习</span>
+    <span class="grid-value">Vibe Coding · Claude Code 实战 · GitHub 开源 · Linux.do · VS Code / Trae 工作流</span>
+  </div>
+</section>
+
+<footer class="footer">
+  <span class="footer-l">任韪岩 · Frontend Engineer</span>
+</footer>
+
+</body>
+</html>

@@ -7,7 +7,7 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import "@/styles/home.css";
 
 const BackgroundGradient = lazy(() => import("@/components/BackgroundGradient"));
-const LiuguangBackground = lazy(() => import("@/components/LiuguangBackground"));
+const XuanjingBackground = lazy(() => import("@/components/XuanjingBackground"));
 const PathsBackground = lazy(() => import("@/components/PathsBackground"));
 import {
   MapPin,
@@ -66,7 +66,7 @@ export default function Home() {
             </div>
           )}
           {theme === "nebula" && <div className="nebula-overlay" />}
-          {theme === "liuguang" && <LiuguangBackground />}
+          {theme === "xuanjing" && <XuanjingBackground />}
           {theme === "liuxian" && <PathsBackground />}
         </Suspense>
         <div className="orb orb-a" />
@@ -86,7 +86,7 @@ export default function Home() {
           <div ref={avatarWrapRef} className="home-fade home-avatar-wrap">
             <div className="home-avatar-ring" />
             <div className="home-avatar-inner">
-              <AvatarPicker size={110} fallback="任" />
+              <AvatarPicker size={92} fallback="任" />
             </div>
           </div>
 

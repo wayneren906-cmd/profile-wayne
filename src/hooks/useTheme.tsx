@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback, createContext, useContext } from 'react';
+import { useState, useEffect, useRef, useCallback, createContext, useContext } from 'react';
 
-export type Theme = 'light' | 'dark' | 'nebula' | 'liuguang' | 'liuxian';
+export type Theme = 'light' | 'dark' | 'nebula' | 'xuanjing' | 'liuxian';
 
 type ThemeContextType = {
   theme: Theme;
@@ -14,10 +14,19 @@ const ThemeContext = createContext<ThemeContextType | null>(null);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>('light');
+  const isFirstRun = useRef(true);
 
   useEffect(() => {
-    document.documentElement.classList.remove('light', 'dark', 'nebula', 'liuguang', 'liuxian');
-    document.documentElement.classList.add(theme);
+    const root = document.documentElement;
+    if (!isFirstRun.current) {
+      root.classList.add('theme-transitioning');
+      window.setTimeout(() => {
+        root.classList.remove('theme-transitioning');
+      }, 500);
+    }
+    isFirstRun.current = false;
+    root.classList.remove('light', 'dark', 'nebula', 'xuanjing', 'liuxian');
+    root.classList.add(theme);
     localStorage.setItem('theme', theme);
   }, [theme]);
 

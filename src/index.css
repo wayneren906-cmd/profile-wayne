@@ -15,6 +15,18 @@
 
 html { scroll-behavior: smooth; }
 
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: background-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              fill 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              stroke 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
 ::selection {
   background: rgba(91, 95, 227, 0.25);
   color: inherit;

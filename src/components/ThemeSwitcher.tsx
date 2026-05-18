@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from "react";
-import { Sun, Moon, Sparkles, Fan, GitBranch } from "lucide-react";
+import { Sun, Moon, Sparkles, Aperture, GitBranch } from "lucide-react";
 import { useTheme, type Theme } from "@/hooks/useTheme";
 
 const themeList: { key: Theme; label: string; icon: typeof Sun }[] = [
   { key: "light", label: "晨曦", icon: Sun },
   { key: "dark", label: "深空", icon: Moon },
   { key: "nebula", label: "星云", icon: Sparkles },
-  { key: "liuguang", label: "流光", icon: Fan },
+  { key: "xuanjing", label: "玄镜", icon: Aperture },
   { key: "liuxian", label: "流线", icon: GitBranch },
 ];
 

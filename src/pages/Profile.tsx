@@ -6,7 +6,7 @@ import AvatarPicker from "@/components/AvatarPicker";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 const BackgroundGradient = lazy(() => import("@/components/BackgroundGradient"));
-const LiuguangBackground = lazy(() => import("@/components/LiuguangBackground"));
+const XuanjingBackground = lazy(() => import("@/components/XuanjingBackground"));
 const PathsBackground = lazy(() => import("@/components/PathsBackground"));
 import {
   MapPin,
@@ -29,12 +29,14 @@ import {
   Target,
   Copy,
   Check,
+  Download,
 } from "lucide-react";
 import "@/styles/profile.css";
 
 const skillGroups = [
   {
     label: "前端基础",
+    color: "indigo",
     items: [
       { name: "React", level: 70 },
       { name: "TypeScript", level: 65 },
@@ -47,6 +49,7 @@ const skillGroups = [
   },
   {
     label: "AI 工具",
+    color: "fuchsia",
     items: [
       { name: "Claude Code", level: 85 },
       { name: "AI Agent 编排", level: 78 },
@@ -56,6 +59,7 @@ const skillGroups = [
   },
   {
     label: "工程基础",
+    color: "cyan",
     items: [
       { name: "Git / 版本控制", level: 72 },
       { name: "npm / 包管理", level: 65 },
@@ -77,8 +81,8 @@ const projects = [
   {
     name: "个人简介网站",
     role: "持续迭代",
-    desc: "在 Trae 终端中通过 Claude Code 以自然语言驱动开发，从零搭建并持续迭代的个人简介网站。现已扩展至 5 套主题（晨曦/深空/星云/流光/流线），每套主题拥有独立的背景动画系统——CSS 悬浮球、渐变光晕 blob、SVG 路径动画。实现了 Cloudflare Pages 自动化部署。",
-    tech: "React 18 · TypeScript · Vite 6 · Tailwind CSS 3 · Framer Motion · Claude Code · Cloudflare Pages · CSS 变量主题系统",
+    desc: "在 Trae 终端中通过 Claude Code 以自然语言驱动开发，从零搭建并持续迭代的个人简介网站。现已扩展至 5 套主题（晨曦/深空/星云/玄镜/流线），每套主题拥有独立的背景动画系统——CSS 悬浮球、渐变光晕 blob、SVG 路径动画。实现了 Cloudflare Pages 自动化部署。",
+    tech: ["React 18", "TypeScript", "Vite 6", "Tailwind CSS 3", "Framer Motion", "Claude Code", "Cloudflare Pages", "CSS 变量主题系统"],
     challenges: [
       { problem: "多主题系统的可扩展架构设计", solution: "基于 React Context + CSS 变量构建主题引擎，每个主题仅需定义一套颜色变量和背景组件即可接入，新增主题无需修改现有逻辑" },
       { problem: "复杂背景动画与文字可读性的平衡", solution: "通过多层叠加策略——背景动画层( opacity 调低) → 半透明遮罩层( backdrop-filter ) → 文字阴影层，确保动画效果不影响内容可读性" },
@@ -89,7 +93,7 @@ const projects = [
     name: "GameHub游戏探索平台",
     role: "独立开发",
     desc: "基于 Next.js 构建的游戏发现与信息聚合平台，集成 RAWG API 提供海量游戏数据，支持多维度筛选、排序与搜索。实现了 AI 驱动的游戏评测分析（LLM 总结玩家评价）、硬件兼容性检测、Cloudflare Workers 后端缓存加速等特色功能。",
-    tech: "Next.js 15 · React 19 · TypeScript · Tailwind CSS · Framer Motion · RAWG API · Cloudflare Workers · WASM",
+    tech: ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS", "Framer Motion", "RAWG API", "Cloudflare Workers", "WASM"],
     challenges: [
       { problem: "RAWG API 在国内访问不稳定且存在速率限制", solution: "引入 Cloudflare Workers 作为代理缓存层，结合 KV 存储实现 1 小时 TTL 缓存，大幅降低回源请求并提升国内访问速度" },
       { problem: "游戏图片加载量大，页面性能受影响", solution: "实现 Cloudflare Workers 图片代理，支持 WebP 格式转换与参数化尺寸调整；配合 Next.js 的 next/image 实现懒加载与占位色优化" },
@@ -120,13 +124,13 @@ const socials = [
 ];
 
 const infoCards = [
-  { icon: Code2, label: "技术方向", value: "前端开发" },
-  { icon: Award, label: "AI 工具", value: "Claude Code / Trae" },
-  { icon: BookOpen, label: "核心能力", value: "AI 驱动网页开发" },
-  { icon: Heart, label: "核心理念", value: "人定架构 · AI 实现" },
+  { icon: Code2, label: "技术方向", value: "前端开发", color: "indigo" },
+  { icon: Award, label: "AI 工具", value: "Claude Code / Trae", color: "fuchsia" },
+  { icon: BookOpen, label: "核心能力", value: "AI 驱动网页开发", color: "cyan" },
+  { icon: Heart, label: "核心理念", value: "人定架构 · AI 实现", color: "emerald" },
 ];
 
-function useScrollReveal(threshold = 0) {
+function useScrollReveal(_threshold = 0) {
   const ref = useRef<HTMLDivElement>(null);
   const [revealed, setRevealed] = useState(false);
 
@@ -143,11 +147,11 @@ function useScrollReveal(threshold = 0) {
           setRevealed(false);
         }
       },
-      { threshold, rootMargin: "0px 0px -40px 0px" }
+      { threshold: 0, rootMargin: "0px 0px -80px 0px" }
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, [threshold]);
+  }, []);
 
   return { ref, revealed };
 }
@@ -228,7 +232,7 @@ export default function Profile() {
             </div>
           )}
           {theme === "nebula" && <div className="nebula-overlay" />}
-          {theme === "liuguang" && <LiuguangBackground />}
+          {theme === "xuanjing" && <XuanjingBackground />}
           {theme === "liuxian" && <PathsBackground />}
         </Suspense>
         <div className="orb orb-a" />
@@ -241,44 +245,57 @@ export default function Profile() {
 
         {/* 顶栏 */}
         <div className="profile-topbar pf-fade">
-          <button className="profile-back" onClick={() => navigate("/")} title="返回首页">
+          <button className="profile-back" onClick={() => navigate("/")} title="返回首页" aria-label="返回首页">
             <ArrowLeft size={18} />
           </button>
         </div>
 
-        {/* 主题切换 - 固定定位，与顶栏对齐 */}
-        <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 9999, pointerEvents: "none" }}>
-          <div style={{ maxWidth: 800, margin: "0 auto", padding: "20px 24px", position: "relative", pointerEvents: "none" }}>
-            <div style={{ position: "absolute", right: 24, top: 20, pointerEvents: "auto" }}>
-              <ThemeSwitcher />
-            </div>
-          </div>
+        <div style={{ position: "fixed", top: 20, right: 24, zIndex: 9999 }}>
+          <ThemeSwitcher />
         </div>
+
+        {/* 章节侧边导航 */}
+        <SectionNav />
         <div className="profile-main">
           {/* Hero */}
           <div className="pf-hero">
             <div ref={avatarWrapRef} className="pf-fade pf-avatar-wrap">
               <div className="pf-avatar-ring" />
               <div className="pf-avatar-inner">
-                <AvatarPicker size={120} fallback="任" />
+                <AvatarPicker size={104} fallback="任" />
               </div>
             </div>
             <h1 className="pf-name pf-fade pf-d1">任韪岩</h1>
             <p className="pf-role pf-fade pf-d1">前端初学者 · AI 工具实践者</p>
-            <div className="pf-location pf-fade pf-d2">
-              <MapPin size={13} />
-              <span>中国 · 重庆</span>
-            </div>
-            <p className="pf-bio pf-fade pf-d2">
-              致力于 AI 赋能项目开发的学生开发者。通过 Trae 平台与 Claude Code 的实践，
-              初步掌握 AI 驱动的网页开发流程。相信未来的开发模式将是
-              "人类提供架构思维，AI 负责繁琐的底层实现"。
+            <p className="pf-tagline pf-fade pf-d2">
+              人类提供架构思维，AI 负责繁琐的底层实现。
             </p>
+            <div className="pf-hero-cta pf-fade pf-d2">
+              <a
+                className="pf-cta-primary"
+                href="/resume.pdf"
+                download="任韪岩-简历.pdf"
+              >
+                <Download size={16} />
+                <span>下载简历</span>
+              </a>
+              <a
+                className="pf-cta-secondary"
+                href="#sec-social"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("sec-social")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }}
+              >
+                <Mail size={16} />
+                <span>联系我</span>
+              </a>
+            </div>
           </div>
 
           {/* 求职意向 */}
           <SectionFade delay={0.05}>
-            <div className="pf-job-card">
+            <div className="pf-job-card" id="sec-job">
               <div className="pf-job-icon"><Briefcase size={24} /></div>
               <div className="pf-job-text">
                 <span className="pf-job-label">求职意向</span>
@@ -287,15 +304,19 @@ export default function Profile() {
             </div>
           </SectionFade>
 
-          {/* 信息卡片 */}
+          {/* 信息卡片 — 气泡弹出风格 */}
           <SectionFade>
-            <div className="pf-grid">
+            <div className="pf-grid" id="sec-info">
               {infoCards.map((item, i) => (
-                <div className="pf-info pf-pop-item pf-pop-scale" key={item.label} style={{ transitionDelay: `${0.15 + i * 0.1}s` }}>
-                  <div className="pf-info-icon"><item.icon size={17} /></div>
-                  <div>
-                    <div className="pf-info-label">{item.label}</div>
-                    <div className="pf-info-value">{item.value}</div>
+                <div
+                  className={`pf-info-bubble pf-info-bubble-${item.color}`}
+                  key={item.label}
+                  style={{ animationDelay: `${0.15 + i * 0.1}s, ${0.45 + i * 0.1}s, ${i * 0.2}s` }}
+                >
+                  <div className="pf-info-bubble-icon"><item.icon size={17} /></div>
+                  <div className="pf-info-bubble-text">
+                    <div className="pf-info-bubble-label">{item.label}</div>
+                    <div className="pf-info-bubble-value">{item.value}</div>
                   </div>
                 </div>
               ))}
@@ -304,12 +325,15 @@ export default function Profile() {
 
           {/* 技术能力 */}
           <SectionFade delay={0.05}>
-            <div className="pf-section">
+            <div className="pf-section" id="sec-skills">
               <h2 className="pf-section-title"><Code2 /> 技术能力</h2>
               <div className="pf-card">
                 {skillGroups.map((group, gi) => (
-                  <div key={group.label} className="pf-skill-group">
-                    <div className="pf-skill-group-label">{group.label}</div>
+                  <div key={group.label} className={cn("pf-skill-group", `pf-skill-group-${group.color}`)}>
+                    <div className="pf-skill-group-label">
+                      <span className="pf-skill-group-dot" />
+                      {group.label}
+                    </div>
                     <div className="pf-skill-bubbles">
                       {group.items.map((s, i) => (
                         <SkillBubble
@@ -317,6 +341,7 @@ export default function Profile() {
                           name={s.name}
                           level={s.level}
                           index={gi * 10 + i}
+                          color={group.color}
                         />
                       ))}
                     </div>
@@ -328,7 +353,7 @@ export default function Profile() {
 
           {/* 教育 */}
           <SectionFade delay={0.1}>
-            <div className="pf-section">
+            <div className="pf-section" id="sec-edu">
               <h2 className="pf-section-title"><GraduationCap /> 教育背景</h2>
               <div className="pf-card pf-edu">
                 <div className="pf-info-icon"><GraduationCap size={17} /></div>
@@ -344,11 +369,18 @@ export default function Profile() {
 
           {/* 学习经历 */}
           <SectionFade delay={0.15}>
-            <div className="pf-section">
+            <div className="pf-section" id="sec-learning">
               <h2 className="pf-section-title"><BookOpen /> 学习经历</h2>
               <div className="pf-timeline">
                 {learnings.map((l, i) => (
-                  <div className="pf-learning pf-pop-item pf-pop-scale" key={l.name} style={{ transitionDelay: `${0.15 + i * 0.1}s` }}>
+                  <div
+                    className="pf-learning pf-pop-item pf-pop-scale"
+                    key={l.name}
+                    style={{
+                      "--enter-d": `${0.15 + i * 0.1}s`,
+                      "--exit-d": `${(learnings.length - 1 - i) * 0.05}s`,
+                    } as React.CSSProperties}
+                  >
                     <div className="pf-learning-head">
                       <span className="pf-learning-name">{l.name}</span>
                       <span className="pf-learning-badge">{l.role}</span>
@@ -362,30 +394,11 @@ export default function Profile() {
 
           {/* 项目经验 */}
           <SectionFade delay={0.2}>
-            <div className="pf-section">
+            <div className="pf-section" id="sec-projects">
               <h2 className="pf-section-title"><FolderGit2 /> 项目经验</h2>
-              <div className="pf-card">
+              <div className="pf-projects">
                 {projects.map((p, pi) => (
-                  <div className="pf-project" key={p.name}>
-                    <div className="pf-project-head">
-                      <span className="pf-project-name">{p.name}</span>
-                      <span className="pf-project-badge">{p.role}</span>
-                    </div>
-                    <p className="pf-project-desc">{p.desc}</p>
-                    <div className="pf-project-tech">{p.tech}</div>
-                    {p.challenges.map((c, ci) => {
-                      const globalIdx = projects
-                        .slice(0, pi)
-                        .reduce((sum, proj) => sum + proj.challenges.length, 0) + ci;
-                      return (
-                        <div className="pf-project-challenge pf-pop-item pf-pop-right" key={ci} style={{ transitionDelay: `${0.15 + globalIdx * 0.1}s` }}>
-                          <span className="pf-challenge-label">难点 {ci + 1}</span>
-                          <span className="pf-challenge-text">{c.problem}</span>
-                          <span className="pf-challenge-solution">{c.solution}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
+                  <ProjectCard project={p} index={pi} key={p.name} />
                 ))}
               </div>
             </div>
@@ -393,29 +406,32 @@ export default function Profile() {
 
           {/* 成长目标 */}
           <SectionFade delay={0.25}>
-            <div className="pf-section">
+            <div className="pf-section" id="sec-growth">
               <h2 className="pf-section-title"><Target /> 成长目标</h2>
               <div className="pf-card">
-                {growthGoals.map((g, i) => (
-                  <div className="pf-growth-item pf-pop-item pf-pop-up" key={g.title} style={{ transitionDelay: `${0.15 + i * 0.12}s` }}>
-                    <div className="pf-growth-icon"><g.icon size={18} /></div>
-                    <div className="pf-growth-body">
-                      <span className="pf-growth-title">{g.title}</span>
-                      <p className="pf-growth-desc">{g.desc}</p>
+                {growthGoals.map((g, i) => {
+                  const rowD = 0.15 + i * 0.18;
+                  return (
+                    <div className="pf-growth-item pf-pop-item pf-pop-up" key={g.title} style={{ transitionDelay: `${rowD}s` }}>
+                      <div className="pf-growth-icon" style={{ transitionDelay: `${rowD + 0.08}s` }}><g.icon size={18} /></div>
+                      <div className="pf-growth-body">
+                        <span className="pf-growth-title">{g.title}</span>
+                        <p className="pf-growth-desc">{g.desc}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </SectionFade>
 
           {/* 社交 */}
           <SectionFade delay={0.3}>
-            <div className="pf-section">
+            <div className="pf-section" id="sec-social">
               <h2 className="pf-section-title"><Link2 /> 社交与联系</h2>
               <div className="pf-card pf-socials">
                 {socials.map((s, i) => (
-                  <div className="pf-social-row pf-pop-item pf-pop-left" key={s.label} style={{ transitionDelay: `${0.15 + i * 0.1}s` }}>
+                  <div className="pf-social-row pf-pop-item pf-pop-left" key={s.label} style={{ transitionDelay: `${i * 0.18}s` }}>
                     <a
                       className="pf-social-item"
                       href={s.href}
@@ -461,14 +477,14 @@ export default function Profile() {
   );
 }
 
-function SkillBubble({ name, level, index }: {
-  name: string; level: number; index: number;
+function SkillBubble({ name, level, index, color }: {
+  name: string; level: number; index: number; color: string;
 }) {
   const sizeScale = level >= 80 ? "lg" : level >= 70 ? "md" : "sm";
 
   return (
     <span
-      className={cn("pf-skill-bubble", `pf-skill-${sizeScale}`, "pf-skill-pop")}
+      className={cn("pf-skill-bubble", `pf-skill-${sizeScale}`, `pf-skill-${color}`, "pf-skill-pop")}
       style={{ animationDelay: `${index * 0.08}s, ${0.45 + index * 0.08}s, ${index * 0.2}s` }}
     >
       <span className="pf-skill-bubble-name">{name}</span>
@@ -487,5 +503,134 @@ function SectionFade({ children, delay = 0, manualReveal }: {
     <div ref={ref} className={cn("pf-section-fade", revealed && "pf-section-visible")} style={{ transitionDelay: `${delay}s` }}>
       {children}
     </div>
+  );
+}
+
+function ProjectCard({ project, index }: {
+  project: typeof projects[number]; index: number;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setInView(true);
+        else setInView(false);
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={cardRef}
+      className={cn("pf-project-card pf-pop-item pf-pop-up", inView && "pf-card-in")}
+      style={{ transitionDelay: `${0.15 + index * 0.12}s` }}
+    >
+      <div className="pf-project-index">{String(index + 1).padStart(2, "0")}</div>
+      <div className="pf-project-head pf-stage pf-stage-1">
+        <span className="pf-project-name">{project.name}</span>
+        <span className="pf-project-badge">{project.role}</span>
+      </div>
+      <p className="pf-project-desc pf-stage pf-stage-1">{project.desc}</p>
+      <div className="pf-project-tech-list pf-stage pf-stage-2">
+        {project.tech.map((t, ti) => (
+          <span
+            className="pf-project-tech-chip pf-chip-pop"
+            key={t}
+            style={{ transitionDelay: `${0.25 + ti * 0.04}s` }}
+          >
+            {t}
+          </span>
+        ))}
+      </div>
+      <div className="pf-project-challenges pf-stage pf-stage-3">
+        {project.challenges.map((c, ci) => (
+          <div
+            className="pf-project-challenge pf-challenge-slide"
+            key={ci}
+            style={{ animationDelay: `${0.5 + ci * 0.12}s` }}
+          >
+            <div className="pf-challenge-head">
+              <span className="pf-challenge-label">难点 {ci + 1}</span>
+              <span className="pf-challenge-text">{c.problem}</span>
+            </div>
+            <div className="pf-challenge-solution">
+              <span className="pf-challenge-arrow">→</span>
+              {c.solution}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const navSections: { id: string; label: string }[] = [
+  { id: "sec-job", label: "求职意向" },
+  { id: "sec-info", label: "信息" },
+  { id: "sec-skills", label: "技术能力" },
+  { id: "sec-edu", label: "教育背景" },
+  { id: "sec-learning", label: "学习经历" },
+  { id: "sec-projects", label: "项目经验" },
+  { id: "sec-growth", label: "成长目标" },
+  { id: "sec-social", label: "社交" },
+];
+
+function SectionNav() {
+  const [active, setActive] = useState<string>(navSections[0].id);
+
+  useEffect(() => {
+    const elements = navSections
+      .map((s) => document.getElementById(s.id))
+      .filter((el): el is HTMLElement => !!el);
+    if (!elements.length) return;
+    const visible = new Map<string, number>();
+    const obs = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            visible.set(entry.target.id, entry.intersectionRatio);
+          } else {
+            visible.delete(entry.target.id);
+          }
+        }
+        if (visible.size > 0) {
+          const top = [...visible.entries()].sort((a, b) => b[1] - a[1])[0][0];
+          setActive(top);
+        }
+      },
+      { threshold: [0.1, 0.4, 0.7], rootMargin: "-20% 0px -40% 0px" }
+    );
+    elements.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
+  const goTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
+
+  return (
+    <nav className="pf-nav" aria-label="章节导航">
+      {navSections.map((s) => (
+        <button
+          key={s.id}
+          className={cn("pf-nav-dot", active === s.id && "active")}
+          onClick={() => goTo(s.id)}
+          title={s.label}
+          aria-label={`跳转到${s.label}`}
+        >
+          <span className="pf-nav-dot-label">{s.label}</span>
+        </button>
+      ))}
+    </nav>
   );
 }

@@ -4,7 +4,19 @@
       "Bash(npx vite *)",
       "Bash(npx tsc *)",
       "Bash(npm run *)",
-      "Bash(npx wrangler *)"
+      "Bash(npx wrangler *)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(curl *)",
+      "Read(//c/A_game_hub/**)",
+      "Bash(npm install *)",
+      "WebFetch(domain:gamehub.wayne-ren906.workers.dev)",
+      "Bash(NEXT_PUBLIC_WORKER_URL=https://gamehub.wayne-ren906.workers.dev npm run build)",
+      "Bash(grep -o 'function [A-Z]\\([^\\)]*\\){let\\\\[[a-z],[a-z]\\\\]=[^}]*\\(0,s.useState\\)\\(\\\\[\\\\]\\)[^}]*}' /tmp/page2.js)",
+      "Bash(NEXT_PUBLIC_WORKER_URL=https://gamehub.wayne-ren906.workers.dev npx next build)",
+      "WebSearch",
+      "WebFetch(domain:en.wikipedia.org)",
+      "WebFetch(domain:www.zeldapedia.wiki)",
+      "Bash(NODE_OPTIONS=\"--dns-result-order=ipv4first\" npx wrangler pages deploy out --project-name gamehub --commit-dirty)"
     ]
   }
 }
