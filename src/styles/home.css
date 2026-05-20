@@ -643,3 +643,9 @@
   .home-tags { margin-bottom: 14px; }
   .home-socials { margin-bottom: 16px; }
 }
+
+/* 气泡入场动画（独立定义，避免跨 chunk 依赖） */
+@keyframes bubblePop {
+  from { opacity: 0; transform: scale(0); }
+  to   { opacity: 1; transform: scale(1); }
+}
