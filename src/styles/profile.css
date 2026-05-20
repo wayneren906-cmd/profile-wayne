@@ -718,7 +718,7 @@
 .pf-info-bubble-emerald  { --ib-color: #10b981; --ib-color2: #06b6d4; }
 
 .pf-section-visible .pf-info-bubble {
-  animation: bubblePop 0.45s cubic-bezier(0.34, 1.25, 0.64, 0.97) forwards,
+  animation: bubblePop 0.45s cubic-bezier(0.34, 1.45, 0.64, 0.90) forwards,
              bubbleGradient 4s ease-in-out infinite;
 }
 
