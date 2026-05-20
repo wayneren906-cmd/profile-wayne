@@ -323,8 +323,24 @@ export default function Profile() {
             </div>
           </SectionFade>
 
-          {/* 技术能力 */}
+          {/* 教育 */}
           <SectionFade delay={0.05}>
+            <div className="pf-section" id="sec-edu">
+              <h2 className="pf-section-title"><GraduationCap /> 教育背景</h2>
+              <div className="pf-card pf-edu">
+                <div className="pf-info-icon"><GraduationCap size={17} /></div>
+                <div>
+                  <div style={{ fontSize: "15px", fontWeight: 600 }}>重庆邮电大学 · 物联网工程</div>
+                  <div style={{ fontSize: "13px", color: "var(--text-muted)", marginTop: "3px" }}>
+                    大二在读
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SectionFade>
+
+          {/* 技术能力 */}
+          <SectionFade delay={0.1}>
             <div className="pf-section" id="sec-skills">
               <h2 className="pf-section-title"><Code2 /> 技术能力</h2>
               <div className="pf-card">
@@ -347,22 +363,6 @@ export default function Profile() {
                     </div>
                   </div>
                 ))}
-              </div>
-            </div>
-          </SectionFade>
-
-          {/* 教育 */}
-          <SectionFade delay={0.1}>
-            <div className="pf-section" id="sec-edu">
-              <h2 className="pf-section-title"><GraduationCap /> 教育背景</h2>
-              <div className="pf-card pf-edu">
-                <div className="pf-info-icon"><GraduationCap size={17} /></div>
-                <div>
-                  <div style={{ fontSize: "15px", fontWeight: 600 }}>重庆邮电大学 · 物联网工程</div>
-                  <div style={{ fontSize: "13px", color: "var(--text-muted)", marginTop: "3px" }}>
-                    大二在读
-                  </div>
-                </div>
               </div>
             </div>
           </SectionFade>
@@ -574,8 +574,8 @@ function ProjectCard({ project, index }: {
 const navSections: { id: string; label: string }[] = [
   { id: "sec-job", label: "求职意向" },
   { id: "sec-info", label: "信息" },
-  { id: "sec-skills", label: "技术能力" },
   { id: "sec-edu", label: "教育背景" },
+  { id: "sec-skills", label: "技术能力" },
   { id: "sec-learning", label: "学习经历" },
   { id: "sec-projects", label: "项目经验" },
   { id: "sec-growth", label: "成长目标" },
