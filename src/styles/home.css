@@ -419,42 +419,68 @@
 .home-stat-val { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
 .home-stat-lbl { font-size: 11px; color: var(--text-muted); letter-spacing: -0.005em; }
 
-/* 标签 */
+/* 标签 — 渐变色浮动气泡 */
 .home-tags {
-  display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
   margin-bottom: 20px;
 }
+
 .home-tag {
-  font-size: 12px; padding: 6px 14px;
-  border-radius: 980px;
-  background: var(--tag-bg);
-  color: var(--tag-text);
-  font-weight: 500;
+  --ht-color: #6366f1;
+  --ht-color2: #8b5cf6;
+  position: relative;
+  display: inline-flex; align-items: center;
+  font-size: 12px; padding: 7px 15px;
+  border-radius: 100px;
+  font-weight: 600;
   letter-spacing: -0.005em;
-  border: 1px solid transparent;
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-              background 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-              color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  background:
+    linear-gradient(135deg,
+      color-mix(in srgb, var(--ht-color) 14%, transparent),
+      color-mix(in srgb, var(--ht-color2) 16%, transparent),
+      color-mix(in srgb, var(--ht-color) 14%, transparent));
+  background-size: 200% 200%;
+  border: 1px solid color-mix(in srgb, var(--ht-color) 22%, transparent);
+  color: var(--text);
   cursor: default;
-  animation: tagPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.35s ease,
+              background 0.35s ease,
+              border-color 0.35s ease,
+              color 0.35s ease;
+  will-change: transform;
+  opacity: 0;
+  transform: scale(0);
 }
-.home-tag:nth-child(1) { animation-delay: 0.55s; }
-.home-tag:nth-child(2) { animation-delay: 0.61s; }
-.home-tag:nth-child(3) { animation-delay: 0.67s; }
-.home-tag:nth-child(4) { animation-delay: 0.73s; }
-.home-tag:nth-child(5) { animation-delay: 0.79s; }
-.home-tag:nth-child(6) { animation-delay: 0.85s; }
-.home-tag:nth-child(7) { animation-delay: 0.91s; }
-.home-tag:nth-child(8) { animation-delay: 0.97s; }
-.home-tag:nth-child(9) { animation-delay: 1.03s; }
-@keyframes tagPop {
-  from { opacity: 0; transform: scale(0); }
-  to   { opacity: 1; transform: scale(1); }
+.home-visible .home-tag {
+  animation: bubblePop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+             bubbleFloat 3s ease-in-out infinite,
+             bubbleGradient 4s ease-in-out infinite;
 }
+
+/* 颜色变体 */
+.home-tag-indigo  { --ht-color: #6366f1; --ht-color2: #8b5cf6; }
+.home-tag-fuchsia { --ht-color: #d946ef; --ht-color2: #f472b6; }
+.home-tag-cyan    { --ht-color: #06b6d4; --ht-color2: #3b82f6; }
+
+/* 保持原有 stagger 延迟 */
+.home-tag:nth-child(1) { animation-delay: 0.55s, 0.55s, 0.55s; }
+.home-tag:nth-child(2) { animation-delay: 0.61s, 0.61s, 0.61s; }
+.home-tag:nth-child(3) { animation-delay: 0.67s, 0.67s, 0.67s; }
+.home-tag:nth-child(4) { animation-delay: 0.73s, 0.73s, 0.73s; }
+.home-tag:nth-child(5) { animation-delay: 0.79s, 0.79s, 0.79s; }
+.home-tag:nth-child(6) { animation-delay: 0.85s, 0.85s, 0.85s; }
+.home-tag:nth-child(7) { animation-delay: 0.91s, 0.91s, 0.91s; }
+.home-tag:nth-child(8) { animation-delay: 0.97s, 0.97s, 0.97s; }
+.home-tag:nth-child(9) { animation-delay: 1.03s, 1.03s, 1.03s; }
+
 .home-tag:hover {
-  background: var(--accent);
-  color: #fff;
-  transform: translateY(-1px);
+  border-color: var(--ht-color) !important;
+  background: linear-gradient(135deg, var(--ht-color), var(--ht-color2)) !important;
+  color: #fff !important;
+  transform: translateY(-4px) scale(1.05) !important;
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--ht-color) 38%, transparent),
+              0 0 0 4px color-mix(in srgb, var(--ht-color) 14%, transparent);
 }
 
 /* 社交图标 */
