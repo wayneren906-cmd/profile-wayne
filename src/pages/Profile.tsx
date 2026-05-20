@@ -262,15 +262,30 @@ export default function Profile() {
             <div ref={avatarWrapRef} className="pf-fade pf-avatar-wrap">
               <div className="pf-avatar-ring" />
               <div className="pf-avatar-inner">
-                <AvatarPicker size={104} fallback="任" />
+                <AvatarPicker size={112} fallback="任" />
               </div>
             </div>
             <h1 className="pf-name pf-fade pf-d1">任韪岩</h1>
-            <p className="pf-role pf-fade pf-d1">前端初学者 · AI 工具实践者</p>
+            <p className="pf-role pf-fade pf-d1">
+              前端初学者 · AI 工具实践者
+              <span className="pf-hero-meta-dot" style={{ margin: "0 8px" }} />
+              <MapPin size={12} style={{ verticalAlign: "middle", marginRight: 2 }} />
+              中国·重庆
+            </p>
             <p className="pf-tagline pf-fade pf-d2">
               人类提供架构思维，AI 负责繁琐的底层实现。
             </p>
-            <div className="pf-hero-cta pf-fade pf-d2">
+            <div className="pf-hero-job pf-fade pf-d3">
+              <Briefcase size={14} />
+              <span>求职意向：<strong>前端开发</strong></span>
+            </div>
+            <div className="pf-hero-bubbles pf-fade pf-d4">
+              <span className="pf-hero-bubble pf-hero-bubble-indigo" style={{ animationDelay: "0.42s, 0.42s, 0.42s" }}>React</span>
+              <span className="pf-hero-bubble pf-hero-bubble-fuchsia" style={{ animationDelay: "0.46s, 0.46s, 0.46s" }}>Claude Code</span>
+              <span className="pf-hero-bubble pf-hero-bubble-cyan" style={{ animationDelay: "0.50s, 0.50s, 0.50s" }}>AI Agent</span>
+              <span className="pf-hero-bubble pf-hero-bubble-indigo" style={{ animationDelay: "0.54s, 0.54s, 0.54s" }}>TypeScript</span>
+            </div>
+            <div className="pf-hero-cta pf-fade pf-d5">
               <a
                 className="pf-cta-primary"
                 href="/resume.pdf"
@@ -292,17 +307,6 @@ export default function Profile() {
               </a>
             </div>
           </div>
-
-          {/* 求职意向 */}
-          <SectionFade delay={0.05}>
-            <div className="pf-job-card" id="sec-job">
-              <div className="pf-job-icon"><Briefcase size={24} /></div>
-              <div className="pf-job-text">
-                <span className="pf-job-label">求职意向</span>
-                <span className="pf-job-value">前端开发</span>
-              </div>
-            </div>
-          </SectionFade>
 
           {/* 信息卡片 — 气泡弹出风格 */}
           <SectionFade>
@@ -572,7 +576,6 @@ function ProjectCard({ project, index }: {
 }
 
 const navSections: { id: string; label: string }[] = [
-  { id: "sec-job", label: "求职意向" },
   { id: "sec-info", label: "信息" },
   { id: "sec-edu", label: "教育背景" },
   { id: "sec-skills", label: "技术能力" },
