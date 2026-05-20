@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>任韪岩 — 简历</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', 'Noto Sans SC', 'Inter', system-ui, -apple-system, sans-serif;
+    color: #222;
+    line-height: 1.5;
+    background: #e8e8e8;
+  }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    background: #fff;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  }
+
+  .page::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: #334155;
+    z-index: 10;
+  }
+
+  .sidebar {
+    width: 30%;
+    background: #f8f8f6;
+    padding: 22mm 14mm 22mm 18mm;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    position: relative;
+    box-shadow: 1px 0 0 rgba(0,0,0,0.04);
+  }
+
+  .sidebar-name {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+  }
+
+  .sidebar-name::after {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: #334155;
+    margin-top: 6px;
+  }
+
+  .sidebar-role {
+    color: #777;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .sidebar-section {
+    padding-top: 14px;
+    border-top: 1px solid #e2e2df;
+  }
+
+  .sidebar-section:first-of-type { border-top: none; padding-top: 0; }
+
+  .sidebar-section-title {
+    font-weight: 600;
+    color: #444;
+    font-size: 12px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .sidebar-contact-item {
+    color: #555;
+    font-size: 12px;
+    margin-bottom: 3px;
+  }
+
+  .contact-label {
+    display: inline-block;
+    width: 36px;
+    color: #999;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .sidebar-edu-school {
+    font-weight: 600;
+    font-size: 13px;
+    color: #333;
+  }
+
+  .sidebar-edu-major {
+    color: #666;
+    font-size: 12px;
+    margin-top: 2px;
+  }
+
+  .sidebar-edu-status {
+    color: #999;
+    font-size: 11px;
+    margin-top: 2px;
+  }
+
+  .skill-group {
+    margin-bottom: 8px;
+  }
+
+  .skill-group-label {
+    font-weight: 600;
+    font-size: 11px;
+    margin-bottom: 1px;
+  }
+
+  .skill-group-label.indigo { color: #4f46e5; }
+  .skill-group-label.fuchsia { color: #c026d3; }
+  .skill-group-label.cyan { color: #0891b2; }
+
+  .skill-group-items {
+    color: #666;
+    font-size: 10px;
+  }
+
+  .sidebar-lang {
+    color: #888;
+    font-size: 11px;
+    border-top: 1px solid #e2e2df;
+    padding-top: 12px;
+    margin-top: auto;
+  }
+
+  .sidebar-lang div { margin-bottom: 2px; }
+
+  .main {
+    flex: 1;
+    padding: 22mm 18mm;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .main-section-title {
+    font-weight: 600;
+    color: #334155;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e2e2df;
+    position: relative;
+  }
+
+  .main-section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 28px;
+    height: 2px;
+    background: #334155;
+  }
+
+  .project-name {
+    font-weight: 700;
+    font-size: 15px;
+    color: #1a1a1a;
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .project-role {
+    color: #999;
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  .project-tech {
+    color: #777;
+    font-size: 11px;
+    margin-top: 3px;
+  }
+
+  .project-desc {
+    color: #555;
+    font-size: 11px;
+    margin-top: 4px;
+    line-height: 1.6;
+  }
+
+  .project-highlight {
+    color: #666;
+    font-size: 10px;
+    margin-top: 4px;
+    padding-left: 10px;
+    border-left: 2px solid #d4d4d0;
+  }
+
+  .section-divider {
+    border: none;
+    border-top: 1px solid #e2e2df;
+    margin: 0;
+  }
+
+  .learn-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 20px;
+    font-size: 11px;
+    color: #666;
+  }
+
+  .goal-item {
+    display: flex;
+    gap: 8px;
+    font-size: 11px;
+    color: #555;
+    line-height: 1.55;
+  }
+
+  .goal-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #334155;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .intro-text {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="sidebar">
+    <div style="border-top:none;padding-top:0;">
+      <div class="sidebar-name">任韪岩</div>
+      <div class="sidebar-role">前端开发 · AI 实践者</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">联系方式</div>
+      <div class="sidebar-contact-item"><span class="contact-label">城市</span>中国 · 重庆</div>
+      <div class="sidebar-contact-item"><span class="contact-label">邮箱</span>wayne.ren906@gmail.com</div>
+      <div class="sidebar-contact-item"><span class="contact-label">电话</span>15095950906</div>
+      <div class="sidebar-contact-item"><span class="contact-label">QQ</span>2746682776</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">教育背景</div>
+      <div class="sidebar-edu-school">重庆邮电大学</div>
+      <div class="sidebar-edu-major">物联网工程</div>
+      <div class="sidebar-edu-status">大二在读</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">技术能力</div>
+      <div class="skill-group">
+        <div class="skill-group-label indigo">前端基础</div>
+        <div class="skill-group-items">React · TypeScript · JavaScript · HTML · CSS · Vite · 移动端适配</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label fuchsia">AI 工具</div>
+        <div class="skill-group-items">Claude Code · AI Agent 编排 · LLM API 集成 · Prompt Engineering</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label cyan">工程基础</div>
+        <div class="skill-group-items">Git · npm · Cloudflare Pages</div>
+      </div>
+    </div>
+
+    <div class="sidebar-lang">
+      <div>中文 · 母语</div>
+      <div>English · 读写能力</div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div>
+      <div class="main-section-title">关于我</div>
+      <p class="intro-text">致力于将 AI 深度融入日常工程与工作流，通过 AI Agent 驱动高效开发。人类提供架构思维，AI 负责繁琐的底层实现。</p>
+    </div>
+
+    <div>
+      <div class="main-section-title">项目经验</div>
+    </div>
+
+    <div class="project">
+      <div class="project-header">
+        <span class="project-name">个人简介网站</span>
+        <span class="project-role">持续迭代</span>
+      </div>
+      <div class="project-tech">React 18 · TypeScript · Vite 6 · Tailwind CSS 3 · Cloudflare Pages</div>
+      <div class="project-desc">通过 Claude Code 以自然语言驱动开发，从零搭建并持续迭代。实现 5 套独立主题系统（晨曦 / 深空 / 星云 / 玄镜 / 流线），每套拥有独立 CSS 变量体系与背景动画，Cloudflare Pages 自动化部署。</div>
+      <div class="project-highlight">多主题架构：基于 React Context + CSS 变量构建主题引擎，新增主题无需修改现有代码</div>
+    </div>
+
+    <hr class="section-divider">
+
+    <div class="project">
+      <div class="project-header">
+        <span class="project-name">GameHub 游戏探索平台</span>
+        <span class="project-role">独立开发</span>
+      </div>
+      <div class="project-tech">Next.js 15 · React 19 · RAWG API · Cloudflare Workers · Framer Motion</div>
+      <div class="project-desc">游戏发现与信息聚合平台，集成 RAWG API 提供海量游戏数据，支持多维度筛选与搜索。AI 驱动游戏评测分析，Cloudflare Workers 代理缓存加速。</div>
+      <div class="project-highlight">性能优化：Workers 缓存 + WebP 转换 + 懒加载，解决国内 API 访问不稳定问题</div>
+    </div>
+
+    <hr class="section-divider">
+
+    <div class="project">
+      <div class="project-header">
+        <span class="project-name">MindFlow AI 思维导图工具</span>
+        <span class="project-role">从零搭建</span>
+      </div>
+      <div class="project-tech">Next.js 15 · DeepSeek API · HTML5 Canvas · Cloudflare D1 · JWT</div>
+      <div class="project-desc">AI 思维导图生成工具，输入主题流式生成结构化导图，节点逐层渲染到无限 Canvas 画布。自建事件分发机制区分拖拽与点击，全栈部署于 Cloudflare 免费额度内。</div>
+      <div class="project-highlight">Canvas 交互：自建事件分发机制，流畅区分拖拽平移与节点点击，大节点量下保持 60fps</div>
+    </div>
+
+    <hr class="section-divider">
+
+    <div>
+      <div class="main-section-title">学习与实践</div>
+      <div class="learn-grid">
+        <div>· Vibe Coding 探索实践</div>
+        <div>· Claude Code 本地工作流</div>
+        <div>· GitHub 开源项目学习</div>
+        <div>· B 站 / YouTube 视频学习</div>
+        <div>· VS Code / Codex AI 编程</div>
+        <div>· Linux.do 技术社区交流</div>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <div>
+      <div class="main-section-title">个人目标</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div class="goal-item"><div class="goal-dot"></div>系统学习前端技术栈，深入掌握 React、TypeScript 等主流框架与工具链</div>
+        <div class="goal-item"><div class="goal-dot"></div>积极参与工作室真实项目，在实战中积累协作经验，理解完整开发流程</div>
+        <div class="goal-item"><div class="goal-dot"></div>保持初学者心态，持续投入时间与精力，跟随团队步伐快速成长</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

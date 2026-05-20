@@ -81,7 +81,7 @@ const projects = [
   {
     name: "个人简介网站",
     role: "持续迭代",
-    desc: "在 Trae 终端中通过 Claude Code 以自然语言驱动开发，从零搭建并持续迭代的个人简介网站。现已扩展至 5 套主题（晨曦/深空/星云/玄镜/流线），每套主题拥有独立的背景动画系统——CSS 悬浮球、渐变光晕 blob、SVG 路径动画。实现了 Cloudflare Pages 自动化部署。",
+    desc: "在 VS Code 终端中通过 Claude Code 以自然语言驱动开发，从零搭建并持续迭代的个人简介网站。现已扩展至 5 套主题（晨曦/深空/星云/玄镜/流线），每套主题拥有独立的背景动画系统——CSS 悬浮球、渐变光晕 blob、SVG 路径动画。实现了 Cloudflare Pages 自动化部署。",
     tech: ["React 18", "TypeScript", "Vite 6", "Tailwind CSS 3", "Framer Motion", "Claude Code", "Cloudflare Pages", "CSS 变量主题系统"],
     challenges: [
       { problem: "多主题系统的可扩展架构设计", solution: "基于 React Context + CSS 变量构建主题引擎，每个主题仅需定义一套颜色变量和背景组件即可接入，新增主题无需修改现有逻辑" },
@@ -98,6 +98,17 @@ const projects = [
       { problem: "RAWG API 在国内访问不稳定且存在速率限制", solution: "引入 Cloudflare Workers 作为代理缓存层，结合 KV 存储实现 1 小时 TTL 缓存，大幅降低回源请求并提升国内访问速度" },
       { problem: "游戏图片加载量大，页面性能受影响", solution: "实现 Cloudflare Workers 图片代理，支持 WebP 格式转换与参数化尺寸调整；配合 Next.js 的 next/image 实现懒加载与占位色优化" },
       { problem: "AI 评测功能需要实时分析评论数据", solution: "设计分层评测策略：先用 LLM 批量分析离线评论生成要点标签，再通过 Cloudflare Workers AI 在线推理处理实时请求，兼顾响应速度与分析深度" },
+    ],
+  },
+  {
+    name: "MindFlow AI思维导图工具",
+    role: "从零搭建",
+    desc: "AI 思维导图生成工具，输入主题自动生成结构化导图，支持无限画布自由浏览与云端保存。基于 Canvas 实现拖拽缩放与节点交互，操作流畅顺手。",
+    tech: ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS", "HTML5 Canvas", "DeepSeek API", "Cloudflare Pages", "Cloudflare D1", "JWT"],
+    challenges: [
+      { problem: "Canvas 画布需要同时支持拖拽平移与节点独立交互", solution: "自研事件分发机制，通过位移阈值和时序判断区分画布拖拽与节点点击，保证流畅操作的同时实现节点 hover 高亮与聚焦" },
+      { problem: "AI 生成导图响应时间较长，用户等待体验差", solution: "接入 DeepSeek 流式 API，逐 token 解析 JSON 树结构后实时渲染到画布，配合缩放控件与缩略图导航，将等待转化为逐节点展开的动态呈现" },
+      { problem: "全栈应用在免费额度内完成部署", solution: "利用 @cloudflare/next-on-pages 适配 Next.js App Router，以 D1 作为关系数据库、KV 作为缓存层，所有服务均运行在 Cloudflare 免费额度内" },
     ],
   },
 ];
@@ -125,7 +136,7 @@ const socials = [
 
 const infoCards = [
   { icon: Code2, label: "技术方向", value: "前端开发", color: "indigo" },
-  { icon: Award, label: "AI 工具", value: "Claude Code / Trae", color: "fuchsia" },
+  { icon: Award, label: "AI 工具", value: "Claude Code / Codex", color: "fuchsia" },
   { icon: BookOpen, label: "核心能力", value: "AI 驱动网页开发", color: "cyan" },
   { icon: Heart, label: "核心理念", value: "人定架构 · AI 实现", color: "emerald" },
 ];

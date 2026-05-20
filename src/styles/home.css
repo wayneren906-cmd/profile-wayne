@@ -355,11 +355,11 @@
 .home-delay-7 { transition-delay: 0.35s; }
 
 .home-name {
-  font-size: clamp(44px, 7.5vw, 72px);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  margin: 0 0 14px;
-  line-height: 1.05;
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin: 0 0 10px;
+  line-height: 1.15;
   background: linear-gradient(90deg, var(--text) 0%, var(--accent) 30%, var(--accent2) 50%, var(--accent) 70%, var(--text) 100%);
   background-size: 200% 100%;
   -webkit-background-clip: text;

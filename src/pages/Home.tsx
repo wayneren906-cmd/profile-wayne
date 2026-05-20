@@ -117,7 +117,7 @@ export default function Home() {
             </div>
             <div className="home-stat">
               <Zap size={16} className="home-stat-icon" />
-              <span className="home-stat-val">Trae+CC</span>
+              <span className="home-stat-val">IDE + CC</span>
               <span className="home-stat-lbl">工具链</span>
             </div>
           </div>
@@ -127,7 +127,7 @@ export default function Home() {
             <span className="home-tag home-tag-indigo">React</span>
             <span className="home-tag home-tag-indigo">TypeScript</span>
             <span className="home-tag home-tag-fuchsia">Claude Code</span>
-            <span className="home-tag home-tag-cyan">Trae</span>
+            <span className="home-tag home-tag-cyan">Codex</span>
             <span className="home-tag home-tag-fuchsia">AI Agent</span>
             <span className="home-tag home-tag-indigo">Vite</span>
             <span className="home-tag home-tag-cyan">Cloudflare</span>
