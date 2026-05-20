@@ -12,8 +12,18 @@ type ThemeContextType = {
 
 const ThemeContext = createContext<ThemeContextType | null>(null);
 
+function getInitialTheme(): Theme {
+  try {
+    const stored = localStorage.getItem('theme');
+    if (stored === 'light' || stored === 'dark' || stored === 'nebula' || stored === 'xuanjing' || stored === 'liuxian') {
+      return stored;
+    }
+  } catch {}
+  return 'light';
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
   const isFirstRun = useRef(true);
 
   useEffect(() => {

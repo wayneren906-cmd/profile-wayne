@@ -70,6 +70,16 @@
       }
     </script>
   </head>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t && /^(light|dark|nebula|xuanjing|liuxian)$/.test(t)) {
+          document.documentElement.className = t;
+        }
+      } catch(e) {}
+    })();
+  </script>
   <body>
     <div id="root"></div>
     <noscript>请启用 JavaScript 以查看任韪岩的个人简介。</noscript>
