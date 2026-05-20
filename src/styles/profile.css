@@ -560,9 +560,7 @@
 .pf-hero-bubble-fuchsia { --hb-color: #d946ef; --hb-color2: #f472b6; }
 .pf-hero-bubble-cyan    { --hb-color: #06b6d4; --hb-color2: #3b82f6; }
 .profile-visible .pf-hero-bubble {
-  animation: bubblePop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
-             bubbleFloat 3s ease-in-out infinite,
-             bubbleGradient 4s ease-in-out infinite;
+  animation: bubblePop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 .pf-hero-bubble:hover {
   border-color: var(--hb-color) !important;
