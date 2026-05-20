@@ -124,15 +124,15 @@ export default function Home() {
 
           {/* 标签 */}
           <div className="home-tags home-fade home-delay-5">
-            <span className="home-tag home-tag-indigo">React</span>
-            <span className="home-tag home-tag-indigo">TypeScript</span>
-            <span className="home-tag home-tag-fuchsia">Claude Code</span>
-            <span className="home-tag home-tag-cyan">Codex</span>
-            <span className="home-tag home-tag-fuchsia">AI Agent</span>
-            <span className="home-tag home-tag-indigo">Vite</span>
-            <span className="home-tag home-tag-cyan">Cloudflare</span>
-            <span className="home-tag home-tag-fuchsia">Prompt Engineering</span>
-            <span className="home-tag home-tag-cyan">前端开发</span>
+            <span className="home-tag">React</span>
+            <span className="home-tag">TypeScript</span>
+            <span className="home-tag">Claude Code</span>
+            <span className="home-tag">Codex</span>
+            <span className="home-tag">AI Agent</span>
+            <span className="home-tag">Vite</span>
+            <span className="home-tag">Cloudflare</span>
+            <span className="home-tag">Prompt Engineering</span>
+            <span className="home-tag">前端开发</span>
           </div>
 
           {/* 社交 */}
