@@ -269,8 +269,10 @@ export default function Profile() {
             <p className="pf-role pf-fade pf-d1">
               前端初学者 · AI 工具实践者
               <span style={{ margin: "0 10px", color: "var(--text-muted)", opacity: 0.5 }}>|</span>
-              <MapPin size={12} style={{ verticalAlign: "middle", marginRight: 4 }} />
-              中国·重庆
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 3 }}>
+                <MapPin size={12} />
+                中国·重庆
+              </span>
             </p>
             <p className="pf-tagline pf-fade pf-d2">
               人类提供架构思维，AI 负责繁琐的底层实现。
