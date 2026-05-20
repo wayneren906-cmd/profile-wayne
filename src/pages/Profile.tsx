@@ -554,7 +554,7 @@ function ProjectCard({ project, index }: {
           <div
             className="pf-project-challenge pf-challenge-slide"
             key={ci}
-            style={{ animationDelay: `${0.5 + ci * 0.12}s` }}
+            style={{ animationDelay: `${0.15 + index * 0.12 + ci * 0.1}s` }}
           >
             <div className="pf-challenge-head">
               <span className="pf-challenge-label">难点 {ci + 1}</span>
