@@ -293,10 +293,10 @@ export default function Profile() {
               <span>求职意向：<strong>前端开发</strong></span>
             </div>
             <div className="pf-hero-bubbles pf-fade pf-d4">
-              <span className="pf-hero-bubble pf-hero-bubble-indigo" style={{ animationDelay: "0.42s" }}>React</span>
-              <span className="pf-hero-bubble pf-hero-bubble-fuchsia" style={{ animationDelay: "0.46s" }}>Claude Code</span>
-              <span className="pf-hero-bubble pf-hero-bubble-cyan" style={{ animationDelay: "0.50s" }}>AI Agent</span>
-              <span className="pf-hero-bubble pf-hero-bubble-indigo" style={{ animationDelay: "0.54s" }}>TypeScript</span>
+              <span className="pf-hero-bubble" style={{ animationDelay: "0.42s" }}>React</span>
+              <span className="pf-hero-bubble" style={{ animationDelay: "0.46s" }}>Claude Code</span>
+              <span className="pf-hero-bubble" style={{ animationDelay: "0.50s" }}>AI Agent</span>
+              <span className="pf-hero-bubble" style={{ animationDelay: "0.54s" }}>TypeScript</span>
             </div>
             <div className="pf-hero-cta pf-fade pf-d5">
               <a
